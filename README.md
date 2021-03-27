@@ -16,4 +16,5 @@ Please don't take it seriously, ini cuma repository untuk belajar. Harapannya ka
 ### 2. Membuat Default Model
 
 - [x] Membuat protected class
-- [x] Membuat function insert dengan batch, dan tidak lupa menggunakan prefix tabel_name yg sudah disetting
+- [x] Membuat public function insert dengan batch, dan tidak lupa menggunakan prefix tabel_name yg sudah disetting
+- [x] Membuat public function get, delete, update, count, dan mencoba mengimplementasikannya.

@@ -9,5 +9,8 @@ class Frontend_Controller extends MY_Controller
     parent::__construct();
     // contoh melemparkan data (dari MY_Controller) ke Welcome Controller 
     // $this->data['site_name'] = 'My Website';
+
+    // Akan berlaku ke semua controller yg menginduk ke Frontend Controller
+    $this->load->model(array('User_model'));
   }
 }

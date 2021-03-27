@@ -21,6 +21,15 @@ class Welcome extends Frontend_Controller
 	 */
 	public function index()
 	{
+		//Contoh pengimplementasian model user.
+		// $data = array(
+		// 	'username' => 'aulia',
+		// 	'password' => 'aulia123',
+		// 	'group' => 'admin',
+		// 	'email' => 'auliasw89@gmail.com'
+		// );
+		// $this->User_model->insert($data);
+
 		$this->load->view('welcome_message');
 	}
 }

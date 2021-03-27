@@ -6,7 +6,7 @@ class MY_Model extends CI_Model
   protected $_table_name;
   protected $_order_by;
   protected $_order_by_type;
-  protected $_primary_filter = 'intaval';
+  protected $_primary_filter = 'intval';
   protected $_primary_key;
   protected $_type;
   public $rules;
@@ -25,7 +25,7 @@ class MY_Model extends CI_Model
     } else {
       // Insert tanpa batch atau berulang kali
       $this->db->set($data);
-      $this->db->insert('{PRE}' . $this->_table_name, $data);
+      $this->db->insert('{PRE}' . $this->_table_name);
       // Last inserted ID
       $id = $this->db->insert_id();
       return $id;
@@ -36,7 +36,7 @@ class MY_Model extends CI_Model
   {
     $this->db->set($data);
     $this->db->where($where);
-    $this->db->update('{PRE}' . $this->_table_name, $data);
+    $this->db->update('{PRE}' . $this->_table_name);
   }
 
   public function get($id = NULL, $single = FALSE)
