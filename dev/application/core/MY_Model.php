@@ -8,6 +8,7 @@ class MY_Model extends CI_Model
   protected $_order_by_type;
   protected $_primary_filter = 'intaval';
   protected $_primary_key;
+  protected $_type;
   public $rules;
 
   function __construct()
@@ -46,6 +47,78 @@ class MY_Model extends CI_Model
       $this->db->where($this->_primary_key, $id);
       $method = 'row';
     } elseif ($single == TRUE) {
+      $method = 'row';
+    } else {
+      $method = 'result';
     }
+
+    if ($this->_order_by_type) {
+      $this->db->order_by($this->_order_by, $this->_order_by_type);
+      // contoh untuk pemanggilan order by $this->db->order_by('ID', 'DESC'); atau ASC
+
+    } else {
+      $this->db->order_by($this->_order_by);
+    }
+
+    return $this->db->get('{PRE}' . $this->_table_name)->$method();
+  }
+
+  // Offset untuk pagination, Single untuk memilih jumlah record yg ditampilkan (True=1, FALSE=Semua data), Select membatasi pemilihan field di db
+  public function get_by($where = NULL, $limit = NULL, $offset = NULL, $single = FALSE, $select = NULL)
+  {
+    if ($select != NULL) {
+      $this->db->select($select);
+    }
+
+    // Jika Where digunakan/ TRUE
+    if ($where) {
+      $this->db->where($where);
+    }
+
+    //Jika menggunakan limit dan offsetnya
+    if (($limit) && ($offset)) {
+      $this->db->limit($limit, $offset);
+    } elseif ($limit) {
+      // Jika hanya menggunakan LIMIT
+      $this->db->limit($limit);
+    }
+
+    // Mereturn value menggunakan public function "get" di atas
+    return $this->db->get(NULL, $single);
+  }
+
+  public function delete($id)
+  {
+    $filter = $this->_primary_filter;
+    $id = $filter($id);
+
+    if (!$id) {
+      return FALSE;
+    }
+
+    //primary key berguna untuk memilih id primary dalam table untuk menghapus data
+    $this->db->where($this->_primary_key, $id);
+  }
+
+  public function delete_by($where = NULL)
+  {
+    if ($where) {
+      $this->db->where($where);
+    }
+    $this->db->delete('{PRE}' . $this->_table_name);
+  }
+
+  public function count($where = NULL)
+  {
+    if (!empty($this->_type)) {
+      $where['post_type'] = $this->_type;
+    }
+
+    if ($where) {
+      $this->db->where($where);
+    }
+
+    $this->db->from('{PRE}' . $this->_table_name);
+    return $this->db->count_all_results();
   }
 }
