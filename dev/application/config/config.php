@@ -33,7 +33,10 @@ spl_autoload_register(function ($class) {
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+
+global $SConfig;
+
+$config['base_url'] = $SConfig->_site_url;
 
 /*
 |--------------------------------------------------------------------------
