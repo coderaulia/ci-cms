@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends Frontend_Controller
+class Welcome extends Backend_Controller
 {
 
 	/**
@@ -30,6 +30,7 @@ class Welcome extends Frontend_Controller
 		// );
 		// $this->User_model->insert($data);
 
-		$this->load->view('welcome_message');
+		// Akan menginduk ke backend controller, yg mana sudah didefinisikan ke side backend template 
+		$this->site->view('index');
 	}
 }

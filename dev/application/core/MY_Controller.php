@@ -9,5 +9,9 @@ class MY_Controller extends CI_Controller
   function __construct()
   {
     parent::__construct();
+
+    $this->load->helper(array());
+    $this->load->library(array('site'));
+    $this->load->model(array());
   }
 }
