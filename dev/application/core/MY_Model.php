@@ -84,7 +84,7 @@ class MY_Model extends CI_Model
     }
 
     // Mereturn value menggunakan public function "get" di atas
-    return $this->db->get(NULL, $single);
+    return $this->get(NULL, $single);
   }
 
   public function delete($id)

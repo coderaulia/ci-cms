@@ -15,11 +15,14 @@ class User extends Backend_Controller
   {
     //posting with xss filter
     $post = $this->input->post(NULL, TRUE);
+
     if (isset($post['username'])) {
       $this->user_detail = $this->User_model->get_by(
-        array(
-          'username' => $post['username'], 'group' => 'admin', 1, NULL, TRUE
-        )
+        array('username' => $post['username'], 'group' => 'admin'),
+        1,
+        NULL,
+        TRUE
+
       );
     }
 
@@ -45,7 +48,7 @@ class User extends Backend_Controller
 
       // jika "ingat saya" dicentang, maka set cookie
       if (isset($post['remember'])) {
-        $expire = time() + (86400 * 7);
+        $expire = time() + (86400 * 7); // dalam waktu 7 hari
         set_cookie('username', $post['username'], $expire, "/");
       }
 
@@ -56,7 +59,7 @@ class User extends Backend_Controller
   public function password_check($str)
   {
     $user_detail = $this->user_detail;
-    if ($user_detail->password == crypt($str, $user_detail->password)) {
+    if (@$user_detail->password == crypt($str, @$user_detail->password)) {
       return TRUE;
     } elseif (@$user_detail->password) {
       $this->form_validation->set_message('password_check', 'Password salah!');

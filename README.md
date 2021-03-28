@@ -43,3 +43,4 @@ Sementara masih dalam proses development.
 - [x] Membuat rules di User_model yg sebelumnya sudah dibuat (untuk login).
 - [x] Membuat function untuk enkripsi password.
 - [x] Routing URL di laman admin supaya tidak terlalu panjang.
+- [x] Membuat Login Function beserta form validation, menyeting session, dan cookies jika "remember me" dicentang.

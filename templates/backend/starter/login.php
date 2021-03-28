@@ -74,14 +74,12 @@
           <p>Silahkan isikan info login anda </p>
 
           <div class="field">
-            <label for="username">Username: </label><?php //echo form_error('username'); 
-                                                    ?>
+            <label for="username">Username: </label><?php echo form_error('username'); ?>
             <input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field" />
           </div> <!-- /field -->
 
           <div class="field">
-            <label for="password">Password: </label><?php //echo form_error('password'); 
-                                                    ?>
+            <label for="password">Password: </label><?php echo form_error('password'); ?>
             <input type="password" id="password" name="password" value="" placeholder="Password" class="login password-field" />
           </div> <!-- /password -->
 
@@ -91,7 +89,7 @@
 
           <span class="login-checkbox">
             <input id="remember" name="remember" type="checkbox" class="field login-checkbox" value="yes" tabindex="4" />
-            <label class="choice" for="remember">Biarkan saya tetap login!</label>
+            <label class="choice" for="remember">Ingat Saya!</label>
           </span>
 
           <button class="button btn btn-primary btn-large">Log In</button>
