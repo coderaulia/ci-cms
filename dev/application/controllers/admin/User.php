@@ -18,7 +18,7 @@ class User extends Backend_Controller
     if (isset($post['username'])) {
       $this->user_detail = $this->User_model->get_by(
         array(
-          'username' => $post['username'], 1, NULL, TRUE
+          'username' => $post['username'], 'group' => 'admin', 1, NULL, TRUE
         )
       );
     }
@@ -50,6 +50,20 @@ class User extends Backend_Controller
       }
 
       redirect(set_url('dashboard'));
+    }
+  }
+
+  public function password_check($str)
+  {
+    $user_detail = $this->user_detail;
+    if ($user_detail->password == crypt($str, $user_detail->password)) {
+      return TRUE;
+    } elseif (@$user_detail->password) {
+      $this->form_validation->set_message('password_check', 'Password salah!');
+      return FALSE;
+    } else {
+      $this->form_validation->set_message('password_check', 'Anda tidak memiliki akses ke Admin Panel!');
+      return FALSE;
     }
   }
 
