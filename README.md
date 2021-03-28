@@ -4,6 +4,10 @@
 
 Please don't take it seriously, ini cuma repository untuk belajar. Harapannya kalau sudah selesai bisa dikembangkan, dan diupdate menggunakan Codeigniter 4.
 
+Sementara masih dalam proses development.
+
+## Development Process
+
 ### 1. Initializing Project
 
 - [x] Membuat folder dari hasil ekstrak Codeigniter 3.
@@ -28,4 +32,7 @@ Please don't take it seriously, ini cuma repository untuk belajar. Harapannya ka
 
 ### 4. Prepare Template Admin Dashboard
 
-- [x] Mengimport semua file template starter bootstrap admin page
+- [x] Mengimport semua file template starter bootstrap admin page.
+- [x] Melakukan pemecahan atau templating di starter template dengan file header, footer, dan function apa nanti yg dipanggil (ex: artikel, laman, etc).
+- [x] Membuat Menu Admin dan fitur apa saja yg akan dibuat. Dan mengatur class active di tiap laman yang dibuka (ex: artikel, maka menu aktif ada di artikel).
+- [x] Membuat dynamic title function di template helper.
