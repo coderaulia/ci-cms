@@ -3,6 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends Backend_Controller
 {
+
+  protected $user_detail;
+
   public function __construct()
   {
     parent::__construct();
@@ -10,8 +13,44 @@ class User extends Backend_Controller
 
   public function login()
   {
+    //posting with xss filter
+    $post = $this->input->post(NULL, TRUE);
+    if (isset($post['username'])) {
+      $this->user_detail = $this->User_model->get_by(
+        array(
+          'username' => $post['username'], 1, NULL, TRUE
+        )
+      );
+    }
 
-    $this->site->view('login');
+    $this->form_validation->set_message('required', '%s masih kosong nih, tolong diisi ya!');
+    $rules = $this->User_model->rules; //memanggil rules yg sudah didefinisikan di User_model
+    $this->form_validation->set_rules($rules);
+
+    if ($this->form_validation->run() == FALSE) {
+
+      $this->site->view('login');
+    } else {
+      $login_data = array(
+        'ID' => $this->user_detail->ID,
+        'username' => $post['username'],
+        'logged_in' => TRUE,
+        'active' => $this->user_detail->active,
+        'last_login' => $this->user_detail->last_login,
+        'group' => $this->user_detail->group,
+        'email' => $this->user_detail->email
+      );
+
+      $this->session->set_userdata($login_data);
+
+      // jika "ingat saya" dicentang, maka set cookie
+      if (isset($post['remember'])) {
+        $expire = time() + (86400 * 7);
+        set_cookie('username', $post['username'], $expire, "/");
+      }
+
+      redirect(set_url('dashboard'));
+    }
   }
 
   // public function temporary_register()

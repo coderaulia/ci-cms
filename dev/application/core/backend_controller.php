@@ -9,7 +9,7 @@ class Backend_Controller extends MY_Controller
     parent::__construct();
 
     $this->load->helper(array('template_helper'));
-    $this->load->library(array());
+    $this->load->library(array('form_validation'));
     $this->load->model(array());
 
     // mengisikan library site -> properti side -> eksekusi via view
