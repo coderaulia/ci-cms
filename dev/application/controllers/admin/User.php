@@ -10,19 +10,20 @@ class User extends Backend_Controller
 
   public function login()
   {
+
     $this->site->view('login');
   }
 
-  public function temporary_register()
-  {
-    $data_user = array(
-      'username' => 'admin',
-      'group' => 'admin',
-      'password' => bCrypt('admin', 12),
-      'email' => 'admin@coderaulia.com',
-      'active' => 1
-    );
+  // public function temporary_register()
+  // {
+  //   $data_user = array(
+  //     'username' => 'admin',
+  //     'group' => 'admin',
+  //     'password' => bCrypt('admin', 12),
+  //     'email' => 'admin@coderaulia.com',
+  //     'active' => 1
+  //   );
 
-    $this->User_model->insert($data_user);
-  }
+  //   $this->User_model->insert($data_user);
+  // }
 }

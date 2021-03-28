@@ -41,4 +41,5 @@ Sementara masih dalam proses development.
 
 - [x] Membuat laman login dari template yg sudah tersedia. (biar cepet).
 - [x] Membuat rules di User_model yg sebelumnya sudah dibuat (untuk login).
-- [x] Membuat function untuk membuat password.
+- [x] Membuat function untuk enkripsi password.
+- [x] Routing URL di laman admin supaya tidak terlalu panjang.
