@@ -36,3 +36,9 @@ Sementara masih dalam proses development.
 - [x] Melakukan pemecahan atau templating di starter template dengan file header, footer, dan function apa nanti yg dipanggil (ex: artikel, laman, etc).
 - [x] Membuat Menu Admin dan fitur apa saja yg akan dibuat. Dan mengatur class active di tiap laman yang dibuka (ex: artikel, maka menu aktif ada di artikel).
 - [x] Membuat dynamic title function di template helper.
+
+### 5. Membuat Login Admin
+
+- [x] Membuat laman login dari template yg sudah tersedia. (biar cepet).
+- [x] Membuat rules di User_model yg sebelumnya sudah dibuat (untuk login).
+- [x] Membuat function untuk membuat password.

@@ -21,7 +21,8 @@ class User extends Backend_Controller
       'password' => bCrypt('admin', 12),
       'email' => 'admin@coderaulia.com',
       'active' => 1
-
     );
+
+    $this->User_model->insert($data_user);
   }
 }

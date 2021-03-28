@@ -12,6 +12,6 @@ class MY_Controller extends CI_Controller
 
     $this->load->helper(array('template_helper', 'user_helper'));
     $this->load->library(array('site'));
-    $this->load->model(array());
+    $this->load->model(array('User_model'));
   }
 }
