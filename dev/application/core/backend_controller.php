@@ -15,6 +15,6 @@ class Backend_Controller extends MY_Controller
     // mengisikan library site -> properti side -> eksekusi via view
     $this->site->side = 'backend';
     // testing memanggil template
-    $this->site->template = 'default';
+    $this->site->template = 'starter';
   }
 }
