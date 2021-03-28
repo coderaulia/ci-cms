@@ -5,6 +5,7 @@ class Dashboard extends Backend_Controller
 {
   public function index()
   {
-    $this->site->view('index');
+    $data = array('tes' => 'Testing data');
+    $this->site->view('index', $data);
   }
 }

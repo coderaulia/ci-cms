@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php get_template('header'); ?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
+<h1>Testing Templating</h1>
+<h3><?= $tes; ?></h3>
 
-<body>
-  HEllo World
-</body>
-
-</html>
+<?php get_template('footer'); ?>

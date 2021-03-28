@@ -3,7 +3,7 @@
 class SConfig
 {
   var $_site_url = "http://localhost/ci-cms/";
-  var $_document_root = "/opt/lamp/htdocs/ci-cms";
+  var $_document_root = "/opt/lamp/htdocs/ci-cms//";
   var $_host_name = "localhost";
   var $_site_name = "auliasatriow.com";
   var $_database_name = "ci-cms";
