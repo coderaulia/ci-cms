@@ -12,4 +12,16 @@ class User extends Backend_Controller
   {
     $this->site->view('login');
   }
+
+  public function temporary_register()
+  {
+    $data_user = array(
+      'username' => 'admin',
+      'group' => 'admin',
+      'password' => bCrypt('admin', 12),
+      'email' => 'admin@coderaulia.com',
+      'active' => 1
+
+    );
+  }
 }
