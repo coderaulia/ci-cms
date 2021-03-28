@@ -28,4 +28,4 @@ Please don't take it seriously, ini cuma repository untuk belajar. Harapannya ka
 
 ### 4. Prepare Template Admin Dashboard
 
-- [x] Mengimport semua template starter bootstrap admin page
+- [x] Mengimport semua file template starter bootstrap admin page

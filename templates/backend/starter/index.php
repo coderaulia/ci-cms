@@ -3,15 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Dashboard - Bootstrap Admin Template</title>
+  <title>Dashboard - Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/bootstrap.min.css'); ?>" rel="stylesheet">
-  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/bootstrap-responsive.min.css'); ?>" rel="stylesheet">
+  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>bootstrap-responsive.min.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/font-awesome.css'); ?>" rel="stylesheet">
-  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/style.css'); ?>" rel="stylesheet">
-  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/pages/dashboard.css'); ?>" rel="stylesheet">
+  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>font-awesome.css" rel="stylesheet">
+  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>style.css" rel="stylesheet">
+  <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>pages/dashboard.css" rel="stylesheet">
   <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
 <body>
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-      <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Bootstrap Admin Template </a>
+      <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Admin Panel </a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Account <b class="caret"></b></a>
@@ -79,55 +79,31 @@
       <div class="container">
         <div class="row">
           <div class="span6">
-            <div class="widget widget-nopad">
-              <div class="widget-header"> <i class="icon-list-alt"></i>
-                <h3> Today's Stats</h3>
+
+            <div class="widget">
+              <div class="widget-header"> <i class="icon-signal"></i>
+                <h3> Statistik Website (23 - 29 Maret 2016)</h3>
               </div>
               <!-- /widget-header -->
               <div class="widget-content">
-                <div class="widget big-stats-container">
-                  <div class="widget-content">
-                    <h6 class="bigstats">A fully responsive premium quality admin template built on Twitter Bootstrap by <a href="http://www.egrappler.com" target="_blank">EGrappler.com</a>. These are some dummy lines to fill the area.</h6>
-                    <div id="big_stats" class="cf">
-                      <div class="stat"> <i class="icon-anchor"></i> <span class="value">851</span> </div>
-                      <!-- .stat -->
-
-                      <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value">423</span> </div>
-                      <!-- .stat -->
-
-                      <div class="stat"> <i class="icon-twitter-sign"></i> <span class="value">922</span> </div>
-                      <!-- .stat -->
-
-                      <div class="stat"> <i class="icon-bullhorn"></i> <span class="value">25%</span> </div>
-                      <!-- .stat -->
-                    </div>
-                  </div>
-                  <!-- /widget-content -->
-
-                </div>
-              </div>
-            </div>
-            <!-- /widget -->
-            <div class="widget widget-nopad">
-              <div class="widget-header"> <i class="icon-list-alt"></i>
-                <h3> Recent News</h3>
-              </div>
-              <!-- /widget-header -->
-              <div class="widget-content">
-                <div id='calendar'>
-                </div>
+                <canvas id="area-chart" class="chart-holder" height="250" width="538"> </canvas>
+                <!-- /area-chart -->
               </div>
               <!-- /widget-content -->
             </div>
             <!-- /widget -->
+
+
+            <!-- /widget -->
+            <!-- /widget -->
             <div class="widget">
               <div class="widget-header"> <i class="icon-file"></i>
-                <h3> Content</h3>
+                <h3> Komentar Terbaru</h3>
               </div>
               <!-- /widget-header -->
               <div class="widget-content">
                 <ul class="messages_layout">
-                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img/message_avatar1.png'); ?>" /></a>
+                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img'); ?>/message_avatar1.png" /></a>
                     <div class="message_wrap"> <span class="arrow"></span>
                       <div class="info"> <a class="name">John Smith</a> <span class="time">1 hour ago</span>
                         <div class="options_arrow">
@@ -143,23 +119,7 @@
                       <div class="text"> As an interesting side note, as a head without a body, I envy the dead. There's one way and only one way to determine if an animal is intelligent. Dissect its brain! Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. </div>
                     </div>
                   </li>
-                  <li class="by_myself right"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img/message_avatar2.png'); ?>" /></a>
-                    <div class="message_wrap"> <span class="arrow"></span>
-                      <div class="info"> <a class="name">Bender (myself) </a> <span class="time">4 hours ago</span>
-                        <div class="options_arrow">
-                          <div class="dropdown pull-right"> <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
-                            <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
-                              <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-                              <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-                              <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text"> All I want is to be a monkey of moderate intelligence who wears a suit… that's why I'm transferring to business school! I had more, but you go ahead. Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. File not found. </div>
-                    </div>
-                  </li>
-                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img/message_avatar1.png'); ?>" /></a>
+                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img'); ?>/message_avatar1.png" /></a>
                     <div class="message_wrap"> <span class="arrow"></span>
                       <div class="info"> <a class="name">Celeste Holm </a> <span class="time">1 Day ago</span>
                         <div class="options_arrow">
@@ -175,7 +135,7 @@
                       <div class="text"> And I'd do it again! And perhaps a third time! But that would be it. Are you crazy? I can't swallow that. And I'm his friend Jesus. No, I'm Santa Claus! And from now on you're all named Bender Jr. </div>
                     </div>
                   </li>
-                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img/message_avatar2.png'); ?>" /></a>
+                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img'); ?>/message_avatar1.png" /></a>
                     <div class="message_wrap"> <span class="arrow"></span>
                       <div class="info"> <a class="name">Mark Jobs </a> <span class="time">2 Days ago</span>
                         <div class="options_arrow">
@@ -191,6 +151,22 @@
                       <div class="text"> That's the ONLY thing about being a slave. Now, now. Perfectly symmetrical violence never solved anything. Uh, is the puppy mechanical in any way? As an interesting side note, as a head without a body, I envy the dead. </div>
                     </div>
                   </li>
+                  <li class="from_user left"> <a href="#" class="avatar"><img src="<?php echo get_template_directory(dirname(__FILE__), 'img'); ?>/message_avatar1.png" /></a>
+                    <div class="message_wrap"> <span class="arrow"></span>
+                      <div class="info"> <a class="name">Celeste Holm </a> <span class="time">1 Day ago</span>
+                        <div class="options_arrow">
+                          <div class="dropdown pull-right"> <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
+                            <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
+                              <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
+                              <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
+                              <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text"> And I'd do it again! And perhaps a third time! But that would be it. Are you crazy? I can't swallow that. And I'm his friend Jesus. No, I'm Santa Claus! And from now on you're all named Bender Jr. </div>
+                    </div>
+                  </li>
                 </ul>
               </div>
               <!-- /widget-content -->
@@ -199,77 +175,49 @@
           </div>
           <!-- /span6 -->
           <div class="span6">
-            <div class="widget">
-              <div class="widget-header"> <i class="icon-bookmark"></i>
-                <h3>Important Shortcuts</h3>
+
+            <div class="widget widget-nopad">
+              <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3> Statistik Hari Ini</h3>
               </div>
               <!-- /widget-header -->
               <div class="widget-content">
-                <div class="shortcuts"> <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Apps</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-bookmark"></i><span class="shortcut-label">Bookmarks</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-signal"></i> <span class="shortcut-label">Reports</span> </a><a href="javascript:;" class="shortcut"> <i class="shortcut-icon icon-comment"></i><span class="shortcut-label">Comments</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Users</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-file"></i><span class="shortcut-label">Notes</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-picture"></i> <span class="shortcut-label">Photos</span> </a><a href="javascript:;" class="shortcut"> <i class="shortcut-icon icon-tag"></i><span class="shortcut-label">Tags</span> </a> </div>
+                <div class="widget big-stats-container">
+                  <div class="widget-content">
+                    <p class="bigstats">Berikut ringkasan statistik hari ini mulai dari visitor, facebook like+share, twitter share, dan persentase interaksi visitor</p>
+                    <div id="big_stats" class="cf">
+                      <div class="stat"> <i class="icon-anchor"></i> <span class="value">0</span> </div>
+                      <!-- .stat -->
+
+                      <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value">0</span> </div>
+                      <!-- .stat -->
+
+                      <div class="stat"> <i class="icon-twitter-sign"></i> <span class="value">0</span> </div>
+                      <!-- .stat -->
+
+                      <div class="stat"> <i class="icon-bullhorn"></i> <span class="value">0%</span> </div>
+                      <!-- .stat -->
+                    </div>
+                  </div>
+                  <!-- /widget-content -->
+
+                </div>
+              </div>
+            </div>
+
+            <div class="widget">
+              <div class="widget-header"> <i class="icon-bookmark"></i>
+                <h3>Shortcuts</h3>
+              </div>
+              <!-- /widget-header -->
+              <div class="widget-content">
+                <div class="shortcuts"> <a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-file"></i><span class="shortcut-label">Tambah Artikel</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-shopping-cart"></i><span class="shortcut-label">Pesanan</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-signal"></i> <span class="shortcut-label">Statistik</span> </a><a href="javascript:;" class="shortcut"> <i class="shortcut-icon icon-comments-alt"></i><span class="shortcut-label">Komentar</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Member</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-gift"></i><span class="shortcut-label">Tambah Produk</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-list-alt"></i><span class="shortcut-label">Ganti Tampilan</span> </a><a href="javascript:;" class="shortcut"><i class="shortcut-icon icon-bell"></i><span class="shortcut-label">Konfirmasi</span> </a></div>
                 <!-- /shortcuts -->
               </div>
               <!-- /widget-content -->
             </div>
             <!-- /widget -->
-            <div class="widget">
-              <div class="widget-header"> <i class="icon-signal"></i>
-                <h3> Area Chart Example</h3>
-              </div>
-              <!-- /widget-header -->
-              <div class="widget-content">
-                <canvas id="area-chart" class="chart-holder" height="250" width="538"> </canvas>
-                <!-- /area-chart -->
-              </div>
-              <!-- /widget-content -->
-            </div>
-            <!-- /widget -->
-            <div class="widget widget-table action-table">
-              <div class="widget-header"> <i class="icon-th-list"></i>
-                <h3>A Table Example</h3>
-              </div>
-              <!-- /widget-header -->
-              <div class="widget-content">
-                <table class="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th> Free Resource </th>
-                      <th> Download</th>
-                      <th class="td-actions"> </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td> Fresh Web Development Resources </td>
-                      <td> http://www.egrappler.com/ </td>
-                      <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                    </tr>
-                    <tr>
-                      <td> Fresh Web Development Resources </td>
-                      <td> http://www.egrappler.com/ </td>
-                      <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                    </tr>
-                    <tr>
-                      <td> Fresh Web Development Resources </td>
-                      <td> http://www.egrappler.com/ </td>
-                      <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                    </tr>
-                    <tr>
-                      <td> Fresh Web Development Resources </td>
-                      <td> http://www.egrappler.com/ </td>
-                      <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                    </tr>
-                    <tr>
-                      <td> Fresh Web Development Resources </td>
-                      <td> http://www.egrappler.com/ </td>
-                      <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                    </tr>
 
-                  </tbody>
-                </table>
-              </div>
-              <!-- /widget-content -->
-            </div>
-            <!-- /widget -->
             <div class="widget widget-nopad">
               <div class="widget-header"> <i class="icon-list-alt"></i>
                 <h3> Recent News</h3>
@@ -289,7 +237,7 @@
 
                     <div class="news-item-date"> <span class="news-item-day">15</span> <span class="news-item-month">Jun</span> </div>
                     <div class="news-item-detail"> <a href="http://www.egrappler.com/retina-ready-responsive-app-landing-page-website-template-app-landing/" class="news-item-title" target="_blank">Retina Ready Responsive App Landing Page Website Template – App Landing</a>
-                      <p class="news-item-preview"> App Landing is a retina ready responsive app landing page website template perfect for software and application developers and small business owners looking to promote their iPhone, iPad, Android Apps and software products.</p>
+                      <p class="news-item-preview"> App Landing is a retina ready responsive app landing page website.</p>
                     </div>
 
                   </li>
@@ -316,66 +264,13 @@
     <!-- /main-inner -->
   </div>
   <!-- /main -->
-  <div class="extra">
-    <div class="extra-inner">
-      <div class="container">
-        <div class="row">
-          <div class="span3">
-            <h4>
-              About Free Admin Template</h4>
-            <ul>
-              <li><a href="javascript:;">EGrappler.com</a></li>
-              <li><a href="javascript:;">Web Development Resources</a></li>
-              <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-              <li><a href="javascript:;">Free Resources and Scripts</a></li>
-            </ul>
-          </div>
-          <!-- /span3 -->
-          <div class="span3">
-            <h4>
-              Support</h4>
-            <ul>
-              <li><a href="javascript:;">Frequently Asked Questions</a></li>
-              <li><a href="javascript:;">Ask a Question</a></li>
-              <li><a href="javascript:;">Video Tutorial</a></li>
-              <li><a href="javascript:;">Feedback</a></li>
-            </ul>
-          </div>
-          <!-- /span3 -->
-          <div class="span3">
-            <h4>
-              Something Legal</h4>
-            <ul>
-              <li><a href="javascript:;">Read License</a></li>
-              <li><a href="javascript:;">Terms of Use</a></li>
-              <li><a href="javascript:;">Privacy Policy</a></li>
-            </ul>
-          </div>
-          <!-- /span3 -->
-          <div class="span3">
-            <h4>
-              Open Source jQuery Plugins</h4>
-            <ul>
-              <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-              <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-              <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-              <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-            </ul>
-          </div>
-          <!-- /span3 -->
-        </div>
-        <!-- /row -->
-      </div>
-      <!-- /container -->
-    </div>
-    <!-- /extra-inner -->
-  </div>
-  <!-- /extra -->
+  <!-- /main -->
+
   <div class="footer">
     <div class="footer-inner">
       <div class="container">
         <div class="row">
-          <div class="span12"> &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>. </div>
+          <div class="span12"> &copy; 2016 <a href="http://www.ilmuwebsite.com/">Ilmuwebsite.com</a> </div>
           <!-- /span12 -->
         </div>
         <!-- /row -->
@@ -388,13 +283,13 @@
   <!-- Le javascript
 ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/jquery-1.7.2.min.js'); ?>"></script>
-  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/excanvas.min.js'); ?>"></script>
-  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/chart.min.js'); ?>" type="text/javascript"></script>
-  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/bootstrap.js'); ?>"></script>
-  <script language="javascript" type="text/javascript" src="<?php echo get_template_directory(dirname(__FILE__), 'js/full-calendar/fullcalendar.min.js'); ?>"></script>
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-1.7.2.min.js"></script>
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>excanvas.min.js"></script>
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>chart.min.js" type="text/javascript"></script>
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>bootstrap.js"></script>
+  <script language="javascript" type="text/javascript" src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>full-calendar/fullcalendar.min.js"></script>
 
-  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/base.js'); ?>"></script>
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>base.js"></script>
   <script>
     var lineChartData = {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
