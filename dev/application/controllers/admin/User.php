@@ -70,6 +70,12 @@ class User extends Backend_Controller
     }
   }
 
+  public function logout()
+  {
+    $this->session->sess_destroy();
+    redirect(set_url('login'));
+  }
+
   // public function temporary_register()
   // {
   //   $data_user = array(
