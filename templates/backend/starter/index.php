@@ -8,7 +8,7 @@
 
           <div class="widget">
             <div class="widget-header"> <i class="icon-signal"></i>
-              <h3> Statistik Website (23 - 29 Maret 2016)</h3>
+              <h3> Statistik Website</h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">

@@ -31,15 +31,20 @@ class Site
 
     if ($this->side == 'backend') {
       if ($_this->uri->segment(2) == 'login') {
-        if (isset($user_session['logged_in']) && $user_session['logged_in'] == TRUE && $user_session['group'] == 'admin') {
+        //redirect jika mengakses login tapi punya session dan statusnya admin
+        if (@$user_session['logged_in'] == TRUE && $user_session['group'] == 'admin') {
           redirect(set_url('dashboard'));
         }
+
+        // restriksi jika mengakses laman admin tanpa session login dan status admin
       } else {
-        if (!isset($user_session['logged_in']) or $user_session['group'] != 'admin') {
+        if (!$user_session['logged_in'] || $user_session['group'] != 'admin') {
           $_this->session->sess_destroy();
           redirect(set_url('login'));
         }
       }
+
+      // user side (frontend)
     } else {
       if (!isset($user_session['logged_in'])) {
         $_this->session->sess_destroy();

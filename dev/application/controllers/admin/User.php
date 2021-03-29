@@ -49,7 +49,8 @@ class User extends Backend_Controller
       // jika "ingat saya" dicentang, maka set cookie
       if (isset($post['remember'])) {
         $expire = time() + (86400 * 7); // dalam waktu 7 hari
-        set_cookie('username', $post['username'], $expire, "/");
+        set_cookie('username', $post['username'], $expire, "", "/", "", "TRUE");
+        set_cookie('password', $post['password'], $expire, "", "/", "", "TRUE");
       }
 
       redirect(set_url('dashboard'));
