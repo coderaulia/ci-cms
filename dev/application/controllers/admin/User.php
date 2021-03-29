@@ -38,7 +38,7 @@ class User extends Backend_Controller
         'ID' => $this->user_detail->ID,
         'username' => $post['username'],
         'logged_in' => TRUE,
-        'active' => $this->user_detail->active,
+        'active' =>  $this->user_detail->active,
         'last_login' => $this->user_detail->last_login,
         'group' => $this->user_detail->group,
         'email' => $this->user_detail->email
@@ -49,8 +49,8 @@ class User extends Backend_Controller
       // jika "ingat saya" dicentang, maka set cookie
       if (isset($post['remember'])) {
         $expire = time() + (86400 * 7); // dalam waktu 7 hari
-        set_cookie('username', $post['username'], $expire, "", "/", "", "TRUE");
-        set_cookie('password', $post['password'], $expire, "", "/", "", "TRUE");
+        set_cookie('username', $post['username'], $expire, "", "/", "", "TRUE", "FALSE");
+        set_cookie('password', $post['password'], $expire, "", "/", "", "TRUE", "FALSE");
       }
 
       redirect(set_url('dashboard'));

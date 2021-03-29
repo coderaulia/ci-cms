@@ -13,16 +13,17 @@ class User_model extends MY_Model
     'username' => array(
       'field' => 'username',
       'label' => 'Username',
-      'rules' => 'trim|required'
+      'rules' => 'trim|required',
     ), 'password' => array(
       'field' => 'password',
       'label' => 'Password',
-      'rules' => 'trim|required|callback_password_check'
+      'rules' => 'trim|required|callback_password_check',
     )
 
   );
 
   function __construct()
   {
+    parent::__construct();
   }
 }
