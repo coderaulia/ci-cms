@@ -16,5 +16,7 @@ class Backend_Controller extends MY_Controller
     $this->site->side = 'backend';
     // testing memanggil template
     $this->site->template = 'starter';
+
+    $this->site->is_logged_in();
   }
 }

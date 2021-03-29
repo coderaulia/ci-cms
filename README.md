@@ -44,4 +44,4 @@ Sementara masih dalam proses development.
 - [x] Membuat function untuk enkripsi password.
 - [x] Routing URL di laman admin supaya tidak terlalu panjang.
 - [x] Membuat Login Function beserta form validation, menyeting session, dan cookies jika "remember me" dicentang.
-- [ ] Membuat restriksi halaman admin.
+- [x] Membuat restriksi halaman admin.
