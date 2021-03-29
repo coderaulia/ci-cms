@@ -54,6 +54,22 @@ $(function () {
 		$("#myModal form").find("input[type=text], textarea").val("");
 		$("#myModal form").show();
 	});
+
+	// Ajax Data CRUD for admin
+
+	$(document).on("click", "#submit-artikel", function (eve) {
+		eve.preventDefault();
+
+		var action = $("#form-artikel").attr("action");
+		var dataSend = $("#form-artikel").serialize();
+
+		$.ajax("http://" + host + path + "/action/" + action, {
+			dataType: "json",
+			type: "POST",
+			data: dataSend,
+			success: function (data) {},
+		});
+	});
 });
 
 var lineChartData = {

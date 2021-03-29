@@ -13,4 +13,10 @@ class Artikel extends Backend_Controller
     $data = array();
     $this->site->view('artikel', $data);
   }
+
+  public function action($param)
+  {
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == "xmlhttprequest") {
+      
+  }
 }

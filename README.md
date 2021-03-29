@@ -47,7 +47,10 @@ Sementara masih dalam proses development.
 - [x] Membuat restriksi halaman admin.
 - [x] Fixing bugs: Updating to the latest version of CodeIgniter 3.
 
-### 6. Membuat Pop-up modal untuk tambah Artikel
+### 6. Kelola Artikel
 
 - [x] Mengatur plugin jQuery hashChange di footer template.
-- [x] Mengatur Pop-up modal di artikel
+- [x] Mengatur Pop-up modal di artikel.
+- [ ] Membuat CRUD menggunakan Ajax di main.js.
+- [ ] Membuat action function di controller Artikel.
+- [ ] Membuat model untuk Artikel.
