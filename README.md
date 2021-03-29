@@ -53,4 +53,4 @@ Sementara masih dalam proses development.
 - [x] Mengatur Pop-up modal di artikel.
 - [ ] Membuat CRUD menggunakan Ajax di main.js.
 - [ ] Membuat action function di controller Artikel.
-- [ ] Membuat model untuk Artikel.
+- [x] Membuat model untuk Artikel.
