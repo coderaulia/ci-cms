@@ -45,3 +45,9 @@ Sementara masih dalam proses development.
 - [x] Routing URL di laman admin supaya tidak terlalu panjang.
 - [x] Membuat Login Function beserta form validation, menyeting session, dan cookies jika "remember me" dicentang.
 - [x] Membuat restriksi halaman admin.
+- [x] Fixing bugs: Updating to the latest version of CodeIgniter 3.
+
+### 6. Membuat Pop-up modal untuk tambah Artikel
+
+- [x] Mengatur plugin jQuery hashChange di footer template.
+- [x] Mengatur Pop-up modal di artikel
