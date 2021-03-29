@@ -17,46 +17,11 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-1.7.2.min.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>bootstrap.js"></script>
-<script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery.hashchange.min.js"></script>
+<script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery.ba-bbq.min.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>excanvas.min.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>chart.min.js" type="text/javascript"></script>
-<script language="javascript" type="text/javascript" src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>full-calendar/fullcalendar.min.js"></script>
-
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>base.js"></script>
-<script>
-  // HashChange
-  $(function() {
-    var path = window.location.pathname;
-
-    //memanggil modal jika ada perubahan hash (tambah)
-    $(window).hashchange([{
-      hash: "#tambah",
-      onSet: function() {
-        $('#myModal').modal('show');
-      }
-    }]);
-    // menghapus hash jika popup diclose.
-    $('#myModal').on('hidden', function() {
-      window.history.pushState(null, null, path);
-    });
-
-  });
-
-
-  // Chart
-  var lineChartData = {
-    labels: ["23", "25", "25", "26", "27"],
-    datasets: [{
-      fillColor: "rgba(151,187,205,0.5)",
-      strokeColor: "rgba(151,187,205,1)",
-      pointColor: "rgba(151,187,205,1)",
-      pointStrokeColor: "#fff",
-      data: [2700, 2700, 2900, 2600, 2900]
-    }]
-  }
-
-  var myLine = new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-</script>
+<script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>main.js"></script>
 </body>
 
 </html>
