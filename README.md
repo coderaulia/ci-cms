@@ -52,5 +52,7 @@ Sementara masih dalam proses development.
 - [x] Mengatur plugin jQuery hashChange di footer template.
 - [x] Mengatur Pop-up modal di artikel.
 - [ ] Membuat CRUD menggunakan Ajax di main.js.
-- [ ] Membuat action function di controller Artikel.
 - [x] Membuat model untuk Artikel.
+- [ ] Membuat action function di controller Artikel.
+- [x] Membuat get_user_info di helper user, untuk mengambil detail user/admin yg sedang login.
+- [ ] Membuat helper untuk SEO URL dari judul artikel.

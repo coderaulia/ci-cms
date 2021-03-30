@@ -17,3 +17,13 @@ function bCrypt($pass, $cost)
   // return the hash
   return crypt($pass, $salt);
 }
+
+function get_user_info($param = NULL)
+{
+  $_this = &get_instance();
+  if ($param != NULL) {
+    return $_this->session->userdata($param);
+  } else {
+    return $_this->session->userdata();
+  }
+}
