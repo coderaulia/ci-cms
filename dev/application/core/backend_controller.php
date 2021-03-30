@@ -10,7 +10,7 @@ class Backend_Controller extends MY_Controller
 
     $this->load->helper(array());
     $this->load->library(array('form_validation'));
-    $this->load->model(array('User_model'));
+    $this->load->model(array());
 
     // mengisikan library site -> properti side -> eksekusi via view
     $this->site->side = 'backend';

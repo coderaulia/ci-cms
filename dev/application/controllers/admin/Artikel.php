@@ -44,20 +44,19 @@ class Artikel extends Backend_Controller
 
         echo json_encode($result);
       } else if ($param == 'ambil') {
+        $post = $this->input->post(NULL, TRUE);
         $total_rows = $this->Artikel_model->count();
         $offset = NULL;
 
-        $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_per_page, $offset);
+        $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_perpage, $offset);
 
         //mengambil record dari db ke json
         echo json_encode(
           array(
             'total_rows' => $total_rows,
-            'perpage' => $SConfig->_backend_per_page,
+            'perpage' => $SConfig->_backend_perpage,
             'record' => $record
-
           )
-
         );
       }
     }
