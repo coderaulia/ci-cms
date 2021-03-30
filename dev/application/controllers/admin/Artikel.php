@@ -17,6 +17,7 @@ class Artikel extends Backend_Controller
 
   public function action($param)
   {
+    global $SConfig;
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == "xmlhttprequest") {
       if ($param == 'tambah') {
         $rules = $this->Artikel_model->rules;
@@ -42,6 +43,22 @@ class Artikel extends Backend_Controller
         }
 
         echo json_encode($result);
+      } else if ($param == 'ambil') {
+        $total_rows = $this->Artikel_model->count();
+        $offset = NULL;
+
+        $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_per_page, $offset);
+
+        //mengambil record dari db ke json
+        echo json_encode(
+          array(
+            'total_rows' => $total_rows,
+            'perpage' => $SConfig->_backend_per_page,
+            'record' => $record
+
+          )
+
+        );
       }
     }
   }

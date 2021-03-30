@@ -85,7 +85,21 @@ $(function () {
 			},
 		});
 	});
+
+	ambil_artikel(null, false);
 });
+
+// Various FUNCTION
+
+function ambil_artikel(page_active, scrolltop) {
+	if ($("table#tbl_artikel").length > 0) {
+		$.ajax("http://" + host + path + "/action/ambil", {
+			dataType: "json",
+			type: "POST",
+			success: function (data) {},
+		});
+	}
+}
 
 var lineChartData = {
 	labels: ["23", "25", "25", "26", "27"],
