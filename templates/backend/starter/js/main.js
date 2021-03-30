@@ -67,7 +67,22 @@ $(function () {
 			dataType: "json",
 			type: "POST",
 			data: dataSend,
-			success: function (data) {},
+			success: function (data) {
+				if (data.status == "success") {
+					$("#myModal").modal("hide");
+					//menambahkan alert jika berhasil
+					$("div.widget-content").prepend(
+						'<div class="control-group"><div class="alert alert-info">' +
+							'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+							"<strong>Berhasil!</strong> Artikel telah ditambahkan! </div></div>"
+					);
+				} else {
+					//mengeluarkan error data dengan perulangan (karena berbentuk array)
+					$.each(data.errors, function (key, value) {
+						$("#" + key).attr("placeholder", value);
+					});
+				}
+			},
 		});
 	});
 });

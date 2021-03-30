@@ -38,7 +38,7 @@ class Artikel extends Backend_Controller
             $result = array('status' => 'failed');
           }
         } else {
-          $result = array('status' => 'failed');
+          $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array);
         }
 
         echo json_encode($result);
