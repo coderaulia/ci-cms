@@ -9,6 +9,25 @@ $(function () {
 
 		if (hash == "tambah") {
 			if (path.search("admin/artikel/kategori") > 0) {
+				var kategori_artikel = getJSON("http://" + host + path + "/ambil", {});
+
+				/* kategori artikel */
+				$("#category_parent option").remove();
+				$("#category_parent").append(
+					'<option value="">Pilih Induk Kategori</option>'
+				);
+				if (kategori_artikel.record) {
+					$.each(kategori_artikel.record, function (key, value) {
+						$("#category_parent").append(
+							'<option value="' +
+								value["category_ID"] +
+								'">' +
+								value["category_name"] +
+								"</option>"
+						);
+					});
+				}
+
 				$("#myModal .modal-header #myModalLabel").text(
 					"Tambah Kategori Artikel"
 				);
@@ -25,11 +44,46 @@ $(function () {
 			$("#myModal").modal("show");
 		} else if (hash.search("edit") == 0) {
 			if (path.search("admin/artikel/kategori") > 0) {
-				$("#myModal .modal-header #myModalLabel").text(
-					"Tambah Kategori Artikel"
+				var kategori_artikel = getJSON("http://" + host + path + "/ambil", {});
+				$("#category_parent option").remove();
+				$("#category_parent").append(
+					'<option value="">Pilih Induk Kategori</option>'
 				);
-				$("#myModal .modal-footer #submit-kategori-artikel").text("Tambah!");
-				$("#myModal #form-kategori-artikel").attr("action", "tambah");
+				if (kategori_artikel.record) {
+					$.each(kategori_artikel.record, function (key, value) {
+						$("#category_parent").append(
+							'<option value="' +
+								value["category_ID"] +
+								'">' +
+								value["category_name"] +
+								"</option>"
+						);
+					});
+				}
+
+				/* get value kategori */
+				var cat_ID = getUrlVars()["id"];
+				var kategori_detail = getJSON("http://" + host + path + "/ambil", {
+					id: cat_ID,
+				});
+				$("#myModal .modal-body #category_name").val(
+					kategori_detail.data["category_name"]
+				);
+				$("#myModal .modal-body #category_description").val(
+					kategori_detail.data["category_description"]
+				);
+				$(
+					'#myModal .modal-body #category_parent option[value ="' +
+						kategori_detail.data["category_parent"] +
+						'"]'
+				).prop("selected", true);
+
+				/* all atribut initialized */
+				$("#myModal .modal-body #category_id").val(cat_ID);
+
+				$("#myModal .modal-header #myModalLabel").text("Edit Artikel");
+				$("#myModal .modal-footer #submit-kategori-artikel").text("Update!");
+				$("#myModal #form-kategori-artikel").attr("action", "update");
 			} else if (path.search("admin/artikel") > 0) {
 				let post_ID = getUrlVars()["id"];
 
@@ -56,6 +110,10 @@ $(function () {
 			$("#myModal").modal("show");
 		} else if (hash.search("hapus") == 0) {
 			if (path.search("admin/artikel/kategori") > 0) {
+				var category_ID = getUrlVars()["id"];
+				var kategori_detail = getJSON("http://" + host + path + "/ambil", {
+					id: category_ID,
+				});
 				$("#myModal form").hide();
 				$("#myModal #form-kategori-artikel").attr("action", "hapus");
 				$("#myModal .modal-header #myModalLabel").text(
@@ -64,6 +122,12 @@ $(function () {
 				$("#myModal .modal-footer #submit-kategori-artikel").text(
 					"Ya Hapus Saja!"
 				);
+				$("#myModal .modal-body").prepend(
+					'<p id="hapus-notif">Apakah Anda yakin akan menghapus : <b>"' +
+						kategori_detail.data["category_name"] +
+						'"</b> ???</p>'
+				);
+				$("#myModal #form-kategori-artikel #category_id").val(category_ID);
 			} else if (path.search("admin/artikel") > 0) {
 				let post_ID = getUrlVars()["id"];
 				//melemparkan ID ke artikel controller
@@ -76,9 +140,9 @@ $(function () {
 				$("#myModal .modal-footer #submit-artikel").text("Hapus!");
 				$("#myModal #form-artikel").attr("action", "hapus");
 				$("#myModal .modal-body").prepend(
-					'<p id="hapus-notif">Apakah Anda yakin akan menghapus Artikel <b>' +
+					'<p id="hapus-notif">Apakah Anda yakin akan menghapus artikel berjudul: <b>' +
 						artikel_detail.data["post_title"] +
-						"</b></p>"
+						" ?</b></p>"
 				);
 				$("#myModal #form-artikel #post_id").val(post_ID);
 			}
@@ -152,6 +216,30 @@ $(function () {
 		});
 	});
 	ambil_artikel(null, false);
+
+	// Untuk Kategori
+	$(document).on("click", "#submit-kategori-artikel", function (eve) {
+		eve.preventDefault();
+		var action = $("#form-kategori-artikel").attr("action");
+
+		$.ajax("http://" + host + path + "/" + action, {
+			dataType: "json",
+			type: "POST",
+			data: $("#form-kategori-artikel").serialize(),
+			success: function (data) {
+				if (data.status == "success") {
+					ambil_kategori();
+					$("#myModal").modal("hide");
+				} else {
+					$.each(data.errors, function (key, value) {
+						$("#" + key).attr("placeholder", value);
+					});
+				}
+			},
+		});
+	});
+
+	ambil_kategori();
 
 	// untuk drag n drop kategori
 	$("#list-kategori .list-group").sortable({
@@ -234,6 +322,130 @@ function ambil_artikel(hal_aktif, scrolltop) {
 			},
 		});
 	}
+}
+
+// Fungsi untuk mengambil kategori
+
+function ambil_kategori() {
+	// jsfiddle.net/LkkwH/1/
+	// http://jsfiddle.net/sw_lasse/9wpHa/
+	var path = window.location.pathname;
+	var host = window.location.hostname;
+	if ($("#list-kategori").length > 0) {
+		$.ajax("http://" + host + path + "/ambil", {
+			dataType: "json",
+			type: "POST",
+			success: function (data) {
+				$("#list-kategori ul").remove();
+				/*
+        // BAGIAN 1 
+        var htmlStr = '<ul class="list-group hirarki kategori">';
+        
+        $.each(data.record, function(index, element) {
+            htmlStr = htmlStr + '<li id="ID_'+element.category_ID+'" class="list-group-item">';          
+            htmlStr = htmlStr + '<a class="link-edit" href="kategori#edit?id='+element.category_ID+'">'+element.category_name+'</a>';
+            htmlStr = htmlStr + '<div class="pull-right">';
+            htmlStr = htmlStr + '<a href="kategori#edit?id='+element.category_ID+'" class="link-edit btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i> Edit</a> ';
+            htmlStr = htmlStr + '<a href="kategori#hapus?id='+element.category_ID+'" id="hapus_" class="btn btn-invert btn-small"><i class="btn-icon-only icon-remove"></i> Hapus</a>';
+            htmlStr = htmlStr + '</div>' ;                  
+            htmlStr = htmlStr + '</li>'; 
+        });
+
+        htmlStr = htmlStr + "</ul>";
+        
+        $('#list-kategori').html(htmlStr); 
+         */
+
+				var htmlStr = "";
+				var printTree = function (node) {
+					htmlStr = htmlStr + '<ul class="list-group hirarki kategori">';
+
+					for (var i = 0; i < node.length; i++) {
+						if (node[i]["children"]) var listyle = "li-parent";
+						else listyle = "";
+						htmlStr =
+							htmlStr +
+							'<li id="ID_' +
+							node[i]["category_ID"] +
+							'" class="list-group-item ' +
+							listyle +
+							'">';
+						htmlStr =
+							htmlStr +
+							'<a class="link-edit" href="kategori#edit?id=' +
+							node[i]["category_ID"] +
+							'">' +
+							node[i]["category_name"] +
+							"</a>";
+						htmlStr = htmlStr + '<div class="pull-right">';
+						htmlStr =
+							htmlStr +
+							'<a href="kategori#edit?id=' +
+							node[i]["category_ID"] +
+							'" class="link-edit btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i> Edit</a> ';
+						htmlStr =
+							htmlStr +
+							'<a href="kategori#hapus?id=' +
+							node[i]["category_ID"] +
+							'" id="hapus_" class="btn btn-invert btn-small"><i class="btn-icon-only icon-remove"></i> Hapus</a>';
+						htmlStr = htmlStr + "</div>";
+
+						if (node[i]["children"]) {
+							printTree(node[i]["children"]);
+						}
+
+						htmlStr = htmlStr + "</li>";
+					}
+
+					htmlStr = htmlStr + "</ul>";
+					return htmlStr;
+				};
+
+				tree = unflatten(data.record);
+
+				$("#list-kategori").html(printTree(tree));
+
+				// sortir hierarki kategori
+				$("#list-kategori .list-group").sortable({
+					opacity: 0.5,
+					cursor: "move",
+					placeholder: "ui-state-highlight",
+					update: function () {
+						var orderAll = [];
+						$(".list-group li").each(function () {
+							orderAll.push($(this).attr("id").replace(/_/g, "[]="));
+						});
+
+						// alert($(this).sortable('serialize'));
+						$.post("http://" + host + path + "/sortir", orderAll.join("&"));
+					},
+				});
+			},
+		});
+	}
+}
+
+// Mengatur hirarki kategori parent & child
+function unflatten(array, parent, tree) {
+	tree = typeof tree !== "undefined" ? tree : [];
+	parent = typeof parent !== "undefined" ? parent : { category_ID: 0 };
+
+	var children = _.filter(array, function (child) {
+		return child.category_parent == parent.category_ID;
+	});
+
+	if (!_.isEmpty(children)) {
+		if (parent.category_ID == 0) {
+			tree = children;
+		} else {
+			parent["children"] = children;
+		}
+		_.each(children, function (child) {
+			unflatten(array, child);
+		});
+	}
+
+	return tree;
 }
 
 // mengambil json

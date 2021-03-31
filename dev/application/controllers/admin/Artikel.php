@@ -6,7 +6,7 @@ class Artikel extends Backend_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->model(array('Artikel_model'));
+    $this->load->model(array('Artikel_model', 'Kategori_model'));
   }
 
   public function index()
@@ -93,9 +93,74 @@ class Artikel extends Backend_Controller
     }
   }
 
-  public function kategori()
+  public function kategori($action = '')
   {
-    $data = array();
-    $this->site->view('kategori_artikel', $data);
+    global $SConfig;
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+      if ($action == 'tambah' || $action == 'update') {
+        $rules = $this->Kategori_model->rules;
+        $this->form_validation->set_rules($rules);
+
+        if ($this->form_validation->run() == TRUE) {
+          $post = $this->input->post();
+
+          // jika tidak ada ID maka akan insert
+          $data = array(
+            'category_name' => xss_clean($post['category_name']),
+            'category_slug' => url_title($post['category_name'], '-', TRUE),
+            'category_description' => $post['category_description'],
+            'category_parent' => $post['category_parent'],
+            'category_type' => 'artikel'
+          );
+
+          // jika ada ID maka akan update
+          if (!empty($post['category_id'])) {
+            $this->Kategori_model->update($data, array('category_ID' => $post['category_id']));
+          } else {
+            // ditambahkan "2" jika namanya sama
+            $is_exist = $this->Kategori_model->count(array('category_name' => $data['category_name']));
+            if ($is_exist > 0) {
+              $data['category_name'] = $data['category_name'] . ' 2';
+              $data['category_slug'] = url_title($data['category_name'], '-', TRUE);
+            }
+            $this->Kategori_model->insert($data);
+          }
+
+          $result = array('status' => 'success');
+
+          echo json_encode($result);
+        } else {
+          echo json_encode(array('status' => 'failed'));
+        }
+      } else if ($action == 'ambil') {
+        $post = $this->input->post(NULL, TRUE);
+
+        if (!empty($post['id'])) {
+          echo json_encode(array('data' => $this->Kategori_model->get($post['id'])));
+        } else {
+          $record = $this->Kategori_model->get();
+          echo json_encode(array('record' => $record));
+        }
+      } else if ($action == 'hapus') {
+        $post = $this->input->post();
+        if (!empty($post['category_id'])) {
+          $this->Kategori_model->delete($post['category_id']);
+          // Jika ada child category, maka keduanya akan dihapus
+          $this->Kategori_model->delete_by(array('category_parent' => $post['category_id']));
+          $result = array('status' => 'success');
+        }
+
+        echo json_encode($result);
+
+        // Mengatur hierarki jika kategori disortir
+      } else if ($action == 'sortir') {
+        $post = $this->input->post(NULL, TRUE);
+        foreach ($post['ID'] as $sort => $id)
+          $this->Kategori_model->update(array('category_sort' => $sort + 1), array('category_ID' => $id));
+      }
+    } else {
+      $data = array();
+      $this->site->view('kategori_artikel', $data);
+    }
   }
 }

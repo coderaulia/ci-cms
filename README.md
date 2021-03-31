@@ -62,7 +62,7 @@ Sementara masih dalam proses development.
 - [x] Membuat Edit Artikel (CRUD) menggunakan AJAX.
 - [x] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
 - [x] Kelola Kategori Artikel -> Membuat Layout.
-- [ ] Kelola Kategori Artikel -> CRUD.
+- [x] Kelola Kategori Artikel -> Membuat model untuk kategori, dan CRUD.
 - [ ] Menggunakan text editor di artikel menggunakan CKEditor.
 - [ ] Membuat search artikel menggunakan AJAX.
 
