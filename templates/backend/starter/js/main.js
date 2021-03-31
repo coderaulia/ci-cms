@@ -44,13 +44,22 @@ $(function () {
 			$("#myModal").modal("show");
 		} else if (hash.search("hapus") == 0) {
 			if (path.search("admin/artikel") > 0) {
+				let post_ID = getUrlVars()["id"];
+				//melemparkan ID ke artikel controller
+				let artikel_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: post_ID }
+				);
 				$("#myModal form").hide();
 				$("#myModal .modal-header #myModalLabel").text("Hapus Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Hapus!");
 				$("#myModal #form-artikel").attr("action", "hapus");
 				$("#myModal .modal-body").prepend(
-					'<p id="hapus-notif">Apakah Anda yakin akan menghapus : Artikel?</p>'
+					'<p id="hapus-notif">Apakah Anda yakin akan menghapus Artikel <b>' +
+						artikel_detail.data["post_title"] +
+						"</b></p>"
 				);
+				$("#myModal #form-artikel #post_id").val(post_ID);
 			}
 
 			$("#myModal").modal("show");
@@ -110,7 +119,7 @@ $(function () {
 					$("div.widget-content").prepend(
 						'<div class="control-group"><div class="alert alert-info">' +
 							'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-							"<strong>Berhasil!</strong> Artikel telah ditambahkan! </div></div>"
+							"<strong>Berhasil!</strong> Artikel berhasil diubah! </div></div>"
 					);
 				} else {
 					//mengeluarkan error data dengan perulangan (karena berbentuk array)

@@ -60,7 +60,7 @@ Sementara masih dalam proses development.
 - [x] Read artikel (CRUD) menggunakan Ajax di main.js.
 - [x] Membuat pagination di kelola artikel. (works in firefox, bermasalah di chrome, deprecated?).
 - [x] Membuat Edit Artikel (CRUD) menggunakan AJAX.
-- [ ] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
+- [x] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
 - [ ] Kelola Kategori Artikel.
 - [ ] Menggunakan text editor di artikel menggunakan CKEditor.
 - [ ] Membuat search artikel menggunakan AJAX.
@@ -75,7 +75,8 @@ Sementara masih dalam proses development.
 
 ### 9. Membuat Frontend tampilan Blog.
 
-- [ ]
+- [ ] Mendesign Tampilan dasar.
+- [ ] Melakukan integrasi template.
 
 ### 10. Fitur Template & Pemilihannya di Admin Panel.
 
