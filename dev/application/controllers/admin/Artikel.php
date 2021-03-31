@@ -45,6 +45,8 @@ class Artikel extends Backend_Controller
         echo json_encode($result);
       } else if ($param == 'ambil') {
         $post = $this->input->post(NULL, TRUE);
+
+        // Mengambil ID dari post
         $total_rows = $this->Artikel_model->count();
         $offset = NULL;
 

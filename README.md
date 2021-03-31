@@ -47,7 +47,7 @@ Sementara masih dalam proses development.
 - [x] Membuat restriksi halaman admin.
 - [x] Fixing bugs: Updating to the latest version of CodeIgniter 3.
 
-### 6. Kelola Artikel
+### 6. Kelola Artikel & Kategori Artikel
 
 - [x] Mengatur plugin jQuery hashChange di footer template.
 - [x] Mengatur Pop-up modal di artikel.
@@ -59,3 +59,24 @@ Sementara masih dalam proses development.
 - [x] Mengambil data dari database dan mengubahnya menjadi json, agar bisa dilemparkan ke main.js
 - [x] Read artikel (CRUD) menggunakan Ajax di main.js.
 - [x] Membuat pagination di kelola artikel. (works in firefox, bermasalah di chrome, deprecated?).
+- [ ] Membuat Edit Artikel (CRUD) menggunakan AJAX.
+- [ ] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
+- [ ] Kelola Kategori Artikel.
+- [ ] Menggunakan text editor di artikel menggunakan CKEditor.
+- [ ] Membuat search artikel menggunakan AJAX.
+
+### 7. Kelola laman
+
+- [ ] Membuat fitur kelola laman di Admin Panel.
+
+### 8. Kelola Komentar
+
+- [ ] Membuat fitur kelola komentar di Admin Panel.
+
+### 9. Membuat Frontend tampilan Blog.
+
+- [ ]
+
+### 10. Membuat Fitur Template & Pemilihannya di Admin Panel.
+
+- [ ] Membuat Fitur Template di Admin Panel.
