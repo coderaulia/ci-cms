@@ -92,4 +92,10 @@ class Artikel extends Backend_Controller
       }
     }
   }
+
+  public function kategori()
+  {
+    $data = array();
+    $this->site->view('kategori_artikel', $data);
+  }
 }

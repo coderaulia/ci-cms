@@ -16,6 +16,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-1.7.2.min.js"></script>
+<script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery-ui.min.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>moment-with-locales.min.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>bootstrap.js"></script>
 <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/'); ?>jquery.ba-bbq.min.js"></script>

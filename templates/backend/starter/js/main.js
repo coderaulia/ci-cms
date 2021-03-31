@@ -8,7 +8,13 @@ $(function () {
 		var hash = $.param.fragment();
 
 		if (hash == "tambah") {
-			if (path.search("admin/artikel") > 0) {
+			if (path.search("admin/artikel/kategori") > 0) {
+				$("#myModal .modal-header #myModalLabel").text(
+					"Tambah Kategori Artikel"
+				);
+				$("#myModal .modal-footer #submit-kategori-artikel").text("Tambah!");
+				$("#myModal #form-kategori-artikel").attr("action", "tambah");
+			} else if (path.search("admin/artikel") > 0) {
 				// Mengatur inner html di modal tambah artikel
 				$("#myModal .modal-header #myModalLabel").text("Tambah Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Posting!");
@@ -18,7 +24,13 @@ $(function () {
 			$("#myModal").addClass("big-modal");
 			$("#myModal").modal("show");
 		} else if (hash.search("edit") == 0) {
-			if (path.search("admin/artikel") > 0) {
+			if (path.search("admin/artikel/kategori") > 0) {
+				$("#myModal .modal-header #myModalLabel").text(
+					"Tambah Kategori Artikel"
+				);
+				$("#myModal .modal-footer #submit-kategori-artikel").text("Tambah!");
+				$("#myModal #form-kategori-artikel").attr("action", "tambah");
+			} else if (path.search("admin/artikel") > 0) {
 				let post_ID = getUrlVars()["id"];
 
 				//melemparkan ID ke artikel controller
@@ -43,7 +55,16 @@ $(function () {
 			$("#myModal").addClass("big-modal");
 			$("#myModal").modal("show");
 		} else if (hash.search("hapus") == 0) {
-			if (path.search("admin/artikel") > 0) {
+			if (path.search("admin/artikel/kategori") > 0) {
+				$("#myModal form").hide();
+				$("#myModal #form-kategori-artikel").attr("action", "hapus");
+				$("#myModal .modal-header #myModalLabel").text(
+					"Hapus Kategori Artikel"
+				);
+				$("#myModal .modal-footer #submit-kategori-artikel").text(
+					"Ya Hapus Saja!"
+				);
+			} else if (path.search("admin/artikel") > 0) {
 				let post_ID = getUrlVars()["id"];
 				//melemparkan ID ke artikel controller
 				let artikel_detail = getJSON(
@@ -131,6 +152,13 @@ $(function () {
 		});
 	});
 	ambil_artikel(null, false);
+
+	// untuk drag n drop kategori
+	$("#list-kategori .list-group").sortable({
+		opacity: 0.5,
+		cursor: "move",
+		placeholder: "ui-state-highlight",
+	});
 });
 
 // Various FUNCTION
