@@ -47,23 +47,31 @@ class Artikel extends Backend_Controller
         $post = $this->input->post(NULL, TRUE);
 
         // Mengambil ID dari post
-        $total_rows = $this->Artikel_model->count();
-        $offset = NULL;
+        if (!empty($post['id'])) {
+          echo json_encode(array(
+            'status' => 'success',
+            'data' => $this->Artikel_model->get($post['id'])
+          ));
+        } else {
 
-        if (!empty($post['hal_aktif']) && $post['hal_aktif'] > 1) {
-          $offset = ($post['hal_aktif'] - 1) * $SConfig->_backend_perpage;
+          $total_rows = $this->Artikel_model->count();
+          $offset = NULL;
+
+          if (!empty($post['hal_aktif']) && $post['hal_aktif'] > 1) {
+            $offset = ($post['hal_aktif'] - 1) * $SConfig->_backend_perpage;
+          }
+
+          $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_perpage, $offset);
+
+          //mengambil record dari db ke json
+          echo json_encode(
+            array(
+              'total_rows' => $total_rows,
+              'perpage' => $SConfig->_backend_perpage,
+              'record' => $record
+            )
+          );
         }
-
-        $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_perpage, $offset);
-
-        //mengambil record dari db ke json
-        echo json_encode(
-          array(
-            'total_rows' => $total_rows,
-            'perpage' => $SConfig->_backend_perpage,
-            'record' => $record
-          )
-        );
       }
     }
   }

@@ -59,7 +59,7 @@ Sementara masih dalam proses development.
 - [x] Mengambil data dari database dan mengubahnya menjadi json, agar bisa dilemparkan ke main.js
 - [x] Read artikel (CRUD) menggunakan Ajax di main.js.
 - [x] Membuat pagination di kelola artikel. (works in firefox, bermasalah di chrome, deprecated?).
-- [ ] Membuat Edit Artikel (CRUD) menggunakan AJAX.
+- [x] Membuat Edit Artikel (CRUD) menggunakan AJAX.
 - [ ] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
 - [ ] Kelola Kategori Artikel.
 - [ ] Menggunakan text editor di artikel menggunakan CKEditor.
@@ -77,6 +77,8 @@ Sementara masih dalam proses development.
 
 - [ ]
 
-### 10. Membuat Fitur Template & Pemilihannya di Admin Panel.
+### 10. Fitur Template & Pemilihannya di Admin Panel.
 
 - [ ] Membuat Fitur Template di Admin Panel.
+
+### 11. Fitur Statistik Pengunjung Website

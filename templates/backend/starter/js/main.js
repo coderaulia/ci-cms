@@ -19,9 +19,25 @@ $(function () {
 			$("#myModal").modal("show");
 		} else if (hash.search("edit") == 0) {
 			if (path.search("admin/artikel") > 0) {
+				let post_ID = getUrlVars()["id"];
+
+				//melemparkan ID ke artikel controller
+				let artikel_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: post_ID }
+				);
+				// mengisi data ke form edit
+				$("#myModal .modal-body #post_title").val(
+					artikel_detail.data["post_title"]
+				);
+				$("#myModal .modal-body #post_content").val(
+					artikel_detail.data["post_content"]
+				);
 				$("#myModal .modal-header #myModalLabel").text("Edit Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Update!");
 				$("#myModal #form-artikel").attr("action", "update");
+				//hidden post id input
+				$("#myModal #form-artikel #post_id").val(post_ID);
 			}
 			// memunculkan pop-up
 			$("#myModal").addClass("big-modal");
@@ -181,6 +197,22 @@ function ambil_artikel(hal_aktif, scrolltop) {
 			},
 		});
 	}
+}
+
+// mengambil json
+
+function getJSON(url, data) {
+	return JSON.parse(
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: data,
+			dataType: "json",
+			global: false,
+			async: false,
+			success: function (msg) {},
+		}).responseText
+	);
 }
 
 // menampilkan hasil angka dari hash
