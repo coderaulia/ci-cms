@@ -26,7 +26,7 @@
 
               <div class="controls pull-left">
                 <div class="btn-group">
-                  <a class="btn btn-default" href="#">Aksi Artikel</a>
+                  <a class="btn btn-default" dropdown-toggle" data-toggle="dropdown" href="#">Aksi Artikel</a>
                   <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 
                   <ul class="dropdown-menu" id="btn-action-artikel">
