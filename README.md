@@ -58,3 +58,4 @@ Sementara masih dalam proses development.
 - [x] Membuat form validation library
 - [x] Mengambil data dari database dan mengubahnya menjadi json, agar bisa dilemparkan ke main.js
 - [x] Read artikel (CRUD) menggunakan Ajax di main.js.
+- [x] Membuat pagination di kelola artikel. (works in firefox, bermasalah di chrome, deprecated?).

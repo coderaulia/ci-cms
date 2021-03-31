@@ -189,5 +189,8 @@
   </div>
   <!-- /main-inner -->
 </div>
-
+<script>var myLine = new Chart(
+	document.getElementById("area-chart").getContext("2d")
+).Line(lineChartData);
+</script>
 <?php get_template('footer'); ?>

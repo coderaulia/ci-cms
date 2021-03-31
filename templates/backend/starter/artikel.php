@@ -50,21 +50,13 @@
 
               <table id="tbl-artikel" class="table table-striped table-bordered">
                 <tbody>
-                  <tr>
-                    <td width="2%"><input type="checkbox" name="post_id[]" value="1"></td>
-                    <td width="50%"><a class="link-edit" href="<?= set_url('artikel#edit?id=1'); ?>">3 Tips Powerfull Untuk Facebook Marketing!</a> <strong></strong></td>
-                    <td width="10%"><i class="icon-comment-alt"></i> <span class="value">0</span></td>
-                    <td width="10%"><i class="icon-eye-open"></i> <span class="value">0</span></td>
-                    <td width="12%"><i class="icon-time"></i> <span class="value">1 hari yang lalu</span></td>
-                    <td width="16%" class="td-actions">
-                      <a href="<?= set_url('artikel#edit?id=1'); ?>" class="link-edit btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i> Edit</a>
 
-                      <a href="<?= set_url('artikel#hapus?id=1'); ?>" class="btn btn-invert btn-small btn-info"><i class="btn-icon-only icon-remove" id="hapus_1"></i> Hapus</a>
-
-                    </td>
-                  </tr>
                 </tbody>
               </table>
+
+              <div class="controls pull-right">
+                <ul id="pagination-artikel" class="pagination"></ul>
+              </div>
             </div>
           </div>
         </div>

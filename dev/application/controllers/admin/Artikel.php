@@ -48,6 +48,10 @@ class Artikel extends Backend_Controller
         $total_rows = $this->Artikel_model->count();
         $offset = NULL;
 
+        if (!empty($post['hal_aktif']) && $post['hal_aktif'] > 1) {
+          $offset = ($post['hal_aktif'] - 1) * $SConfig->_backend_perpage;
+        }
+
         $record = $this->Artikel_model->get_by(NULL, $SConfig->_backend_perpage, $offset);
 
         //mengambil record dari db ke json

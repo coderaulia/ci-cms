@@ -38,7 +38,24 @@ $(function () {
 			}
 
 			$("#myModal").modal("show");
-		} else if (hash == "ambil") {
+		} else if (hash.search("ambil") == 0) {
+			if (path.search("admin/artikel")) {
+				var hal_aktif,
+					cari,
+					kategori = null;
+				var hash = getUrlVars();
+
+				if (hash["hal"]) {
+					hal_aktif = hash["hal"];
+				}
+
+				ambil_artikel(hal_aktif, true);
+				$("ul#pagination-artikel li a:contains('" + hal_aktif + "')")
+					.parents()
+					.addClass("active")
+					.siblings()
+					.removeClass("active");
+			}
 		} else if (hash == "mass") {
 		}
 	});
@@ -55,6 +72,8 @@ $(function () {
 		$("#myModal form").show();
 	});
 
+	moment.locale("id");
+
 	// Ajax Data CRUD for admin
 
 	$(document).on("click", "#submit-artikel", function (eve) {
@@ -70,6 +89,7 @@ $(function () {
 			success: function (data) {
 				if (data.status == "success") {
 					$("#myModal").modal("hide");
+					ambil_artikel(null, false);
 					//menambahkan alert jika berhasil
 					$("div.widget-content").prepend(
 						'<div class="control-group"><div class="alert alert-info">' +
@@ -90,11 +110,12 @@ $(function () {
 
 // Various FUNCTION
 
-function ambil_artikel(page_active, scrolltop) {
+function ambil_artikel(hal_aktif, scrolltop) {
 	if ($("table#tbl-artikel").length > 0) {
 		$.ajax("http://" + host + path + "/action/ambil", {
 			dataType: "json",
 			type: "POST",
+			data: { hal_aktif: hal_aktif },
 			success: function (data) {
 				$("table#tbl-artikel tbody tr").remove();
 				//perulangan mengambil data record artikel
@@ -118,6 +139,7 @@ function ambil_artikel(page_active, scrolltop) {
 								element.post_counter +
 								"</span></td>" +
 								'  <td width="12%"><i class="icon-time"></i> <span class="value">' +
+								moment(element.post_date).fromNow() +
 								"</span></td>" +
 								'  <td width="16%" class="td-actions">' +
 								'    <a href="artikel#edit?id=' +
@@ -130,9 +152,50 @@ function ambil_artikel(page_active, scrolltop) {
 								"</tr>"
 						);
 				});
+
+				var pagination = "";
+				//menghitung baris per halaman
+				var paging = Math.ceil(data.total_rows / data.perpage);
+
+				if (!hal_aktif && $("ul#pagination-artikel li").length == 0) {
+					$("ul#pagination-artikel li").remove();
+					for (i = 1; i <= paging; i++) {
+						pagination =
+							pagination +
+							'<li><a href="artikel#ambil?hal=' +
+							i +
+							'">' +
+							i +
+							"</a></li>";
+					}
+				}
+
+				$("ul#pagination-artikel").append(pagination);
+				$("ul#pagination-artikel li:contains('" + hal_aktif + "')").addClass(
+					"active"
+				);
+
+				if (scrolltop == true) {
+					$("body").scrollTop(0);
+				}
 			},
 		});
 	}
+}
+
+// menampilkan hasil angka dari hash
+function getUrlVars() {
+	var vars = [],
+		hash;
+	var hashes = window.location.href
+		.slice(window.location.href.indexOf("?") + 1)
+		.split("&");
+	for (var i = 0; i < hashes.length; i++) {
+		hash = hashes[i].split("=");
+		vars.push(hash[0]);
+		vars[hash[0]] = hash[1];
+	}
+	return vars;
 }
 
 var lineChartData = {
@@ -147,7 +210,3 @@ var lineChartData = {
 		},
 	],
 };
-
-// var myLine = new Chart(
-// 	document.getElementById("area-chart").getContext("2d")
-// ).Line(lineChartData);
