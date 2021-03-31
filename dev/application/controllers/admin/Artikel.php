@@ -19,7 +19,7 @@ class Artikel extends Backend_Controller
   {
     global $SConfig;
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == "xmlhttprequest") {
-      if ($param == 'tambah') {
+      if ($param == 'tambah' || $param == 'update') {
         $rules = $this->Artikel_model->rules;
         $this->form_validation->set_rules($rules);
 
@@ -33,10 +33,17 @@ class Artikel extends Backend_Controller
             'post_date' => date('Y-m-d H:i:s')
           );
 
-          if ($this->Artikel_model->insert($data)) {
+          //mengatur jika ada ID maka update
+          if (!empty($post['post_id'])) {
+            $this->Artikel_model->update($data, array('post_ID' => $post['post_id']));
             $result = array('status' => 'success');
           } else {
-            $result = array('status' => 'failed');
+            // jika tidak ada ID maka akan insert data
+            if ($this->Artikel_model->insert($data)) {
+              $result = array('status' => 'success');
+            } else {
+              $result = array('status' => 'failed');
+            }
           }
         } else {
           $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array);
