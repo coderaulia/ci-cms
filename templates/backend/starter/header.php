@@ -12,6 +12,7 @@
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>font-awesome.css" rel="stylesheet">
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>style.css" rel="stylesheet">
   <link href="<?php echo get_template_directory(dirname(__FILE__), 'css/'); ?>pages/dashboard.css" rel="stylesheet">
+  <script src="<?php echo get_template_directory(dirname(__FILE__), 'js/ckeditor/'); ?>ckeditor.js"></script>
   <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

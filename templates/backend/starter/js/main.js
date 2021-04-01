@@ -1,3 +1,4 @@
+var editor = "";
 var path = window.location.pathname;
 // memanggil host name
 var host = window.location.hostname;
@@ -34,6 +35,9 @@ $(function () {
 				$("#myModal .modal-footer #submit-kategori-artikel").text("Tambah!");
 				$("#myModal #form-kategori-artikel").attr("action", "tambah");
 			} else if (path.search("admin/artikel") > 0) {
+				removeeditor();
+				//memanggil ckeditor
+				createeditor();
 				// Mengatur inner html di modal tambah artikel
 				$("#myModal .modal-header #myModalLabel").text("Tambah Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Posting!");
@@ -96,9 +100,11 @@ $(function () {
 				$("#myModal .modal-body #post_title").val(
 					artikel_detail.data["post_title"]
 				);
-				$("#myModal .modal-body #post_content").val(
-					artikel_detail.data["post_content"]
-				);
+				removeeditor();
+				createeditor(artikel_detail.data["post_content"]);
+				// $("#myModal .modal-body #post_content").val(
+				// 	artikel_detail.data["post_content"]
+				// );
 				$("#myModal .modal-header #myModalLabel").text("Edit Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Update!");
 				$("#myModal #form-artikel").attr("action", "update");
@@ -215,7 +221,12 @@ $(function () {
 			},
 		});
 	});
-	ambil_artikel(null, false);
+
+	if (getUrlVars()["hal"]) {
+		ambil_artikel(getUrlVars()["hal"], false);
+	} else {
+		ambil_artikel(null, false);
+	}
 
 	// Untuk Kategori
 	$(document).on("click", "#submit-kategori-artikel", function (eve) {
@@ -304,6 +315,17 @@ function ambil_artikel(hal_aktif, scrolltop) {
 						pagination =
 							pagination +
 							'<li><a href="artikel#ambil?hal=' +
+							i +
+							'">' +
+							i +
+							"</a></li>";
+					}
+				} else if (hal_aktif) {
+					$("ul#pagination-artikel li").remove();
+					for (i = 1; i <= paging; i++) {
+						pagination =
+							pagination +
+							'<li><a href="artikel#ambil?&hal=' +
 							i +
 							'">' +
 							i +
@@ -477,6 +499,69 @@ function getUrlVars() {
 		vars[hash[0]] = hash[1];
 	}
 	return vars;
+}
+
+// memanggil CKEditor
+function createeditor(content) {
+	if (editor) return;
+	editor = CKEDITOR.appendTo(
+		"wrap_editor",
+		{
+			bodyId: "post_content",
+			name: "post_conten",
+			entities: false,
+			uiColor: "#fafafa",
+			height: "800px",
+			toolbar: [
+				"/",
+				{
+					name: "document",
+					groups: ["mode", "document", "doctools"],
+					items: ["Source"],
+				},
+				{ name: "tools", items: ["Maximize"] },
+				{
+					name: "basicstyles",
+					groups: ["basicstyles", "cleanup"],
+					items: ["Bold", "Italic", "Strike", "-"],
+				},
+				{
+					name: "paragraph",
+					groups: ["list", "indent", "blocks", "align"],
+					items: [
+						"NumberedList",
+						"BulletedList",
+						"-",
+						"Outdent",
+						"Indent",
+						"-",
+						"Blockquote",
+					],
+				},
+				{
+					name: "clipboard",
+					groups: ["clipboard", "undo"],
+					items: ["Undo", "Redo"],
+				},
+				{ name: "links", items: ["Link", "Unlink", "Anchor"] },
+				{
+					name: "insert",
+					items: ["Image", "Table", "HorizontalRule", "SpecialChar"],
+				},
+				{ name: "styles", items: ["Styles", "Format"] },
+			],
+		},
+		content
+	);
+}
+
+// Menghapus jika tidak digunakan
+function removeeditor() {
+	if (!editor) return;
+
+	// Destroy the editor.
+	editor.destroy();
+	editor = null;
 }
 
 var lineChartData = {

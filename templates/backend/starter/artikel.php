@@ -78,7 +78,8 @@
     <form role="form" id="form-artikel" action="tambah">
       <div class="form-group">
         <input class="input-block-level" type="text" id="post_title" name="post_title" placeholder="Tuliskan Judul Artikel Disini">
-        <textarea class="form-control input-block-level" placeholer="Message" name="post_content" rows="20" id="post_content"></textarea>
+        <!-- <textarea class="form-control input-block-level" placeholer="Message" name="post_content" rows="20" id="post_content"></textarea> -->
+        <div id="wrap_editor"></div>
       </div>
       <input type="hidden" name="mass_action_type" id="mass_action_type" />
       <input type="hidden" name="post_id" id="post_id" />

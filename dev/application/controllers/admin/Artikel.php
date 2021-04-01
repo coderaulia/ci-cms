@@ -33,20 +33,22 @@ class Artikel extends Backend_Controller
             'post_date' => date('Y-m-d H:i:s')
           );
 
-          //mengatur jika ada ID maka update
+          // jika ada id maka akan update
           if (!empty($post['post_id'])) {
             $this->Artikel_model->update($data, array('post_ID' => $post['post_id']));
             $result = array('status' => 'success');
           } else {
-            // jika tidak ada ID maka akan insert data
-            if ($this->Artikel_model->insert($data)) {
-              $result = array('status' => 'success');
-            } else {
-              $result = array('status' => 'failed');
+            /* jika ada judul artikel yang sama, maka berikan imbuhan 2 di belakangnya */
+            $is_exist = $this->Artikel_model->count(array('post_title' => $data['post_title']));
+            if ($is_exist > 0) {
+              $data['post_title'] = $data['post_title'] . ' 2';
+              $data['post_name'] = url_title($data['post_title'], '-', TRUE);
+              unset($data['post_date']);
             }
+            $this->Artikel_model->insert($data);
           }
         } else {
-          $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array);
+          $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array());
         }
 
         echo json_encode($result);
