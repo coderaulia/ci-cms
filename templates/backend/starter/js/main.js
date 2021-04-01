@@ -196,7 +196,8 @@ $(function () {
 		eve.preventDefault();
 
 		var action = $("#form-artikel").attr("action");
-		var dataSend = $("#form-artikel").serialize();
+		var dataSend =
+			$("#form-artikel").serialize() + "&post_content=" + editor.getData();
 
 		$.ajax("http://" + host + path + "/action/" + action, {
 			dataType: "json",
@@ -508,7 +509,8 @@ function createeditor(content) {
 		"wrap_editor",
 		{
 			bodyId: "post_content",
-			name: "post_conten",
+			bodyName: "post_content",
+			name: "post_content",
 			entities: false,
 			uiColor: "#fafafa",
 			height: "800px",

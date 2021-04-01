@@ -46,6 +46,7 @@ class Artikel extends Backend_Controller
               unset($data['post_date']);
             }
             $this->Artikel_model->insert($data);
+            $result = array('status' => 'success');
           }
         } else {
           $result = array('status' => 'failed', 'errors' => $this->form_validation->error_array());
