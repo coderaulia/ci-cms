@@ -66,7 +66,8 @@ Sementara masih dalam proses development.
 - [x] Penambahan Atribut Artikel -> SEO, Kategori, Waktu, Setting Komentar.
 - [x] Menggunakan text editor di artikel menggunakan CKEditor.
 - [ ] Membuat search artikel menggunakan AJAX.
-- [ ] Menambahkan aksi masal di kelola artikel.
+- [ ] Membuat filter by kategori.
+- [x] Menambahkan aksi masal di kelola artikel.
 
 ### 7. Kelola laman
 
@@ -80,6 +81,8 @@ Sementara masih dalam proses development.
 
 - [ ] Mendesign Tampilan dasar.
 - [ ] Melakukan integrasi template.
+- [ ] Membuat detail artikel.
+- [ ] Membuat integrasi dengan komentar
 
 ### 10. Fitur Template & Pemilihannya di Admin Panel.
 
