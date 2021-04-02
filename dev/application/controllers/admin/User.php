@@ -77,6 +77,18 @@ class User extends Backend_Controller
     redirect(set_url('login'));
   }
 
+  // mengambil data user, dengan ajax
+  public function action($param1, $param2 = NULL)
+  {
+    global $SConfig;
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+      if ($param1 == 'ambil') {
+        $record = $this->User_model->get_by(NULL, NULL, NULL, FALSE, $param2);
+        echo json_encode(array('record' => $record));
+      }
+    }
+  }
+
   // public function temporary_register()
   // {
   //   $data_user = array(

@@ -28,14 +28,34 @@ class Artikel extends Backend_Controller
           $category = 'tanpa-kategori';
           if (!empty($post['category_slug'])) $category = implode(",", $post['category_slug']);
 
+          // Waktu posting
+          $post_date = $post['year'] . '/' . $post['month'] . '/' . $post['date'] . ' ' . $post['hour'] . ':' . $post['minute'] . ':00';
+
+          // Aturan Komentar
+          $comment_status = "";
+          $comment_notification = "";
+          if (!empty($post['comment_status'])) $comment_status = $post['comment_status'];
+          if (!empty($post['comment_notification'])) $comment_notification = $post['comment_notification'];
+
+          // SEO
+
+          $post_attribute = array(
+            'comment_notification' => $comment_notification,
+            'meta_title' => $post['meta_title'],
+            'meta_keyword' => $post['meta_keyword'],
+            'meta_description' => $post['meta_description']
+          );
+
           $data = array(
             'post_author' => get_user_info('ID'),
             'post_title' => $post['post_title'],
             'post_name' => url_title($post['post_title'], '-', TRUE),
             'post_content' => $post['post_content'],
-            'post_date' => date('Y-m-d H:i:s'),
+            'post_date' => $post_date,
             'post_type' => 'artikel',
-            'post_category' => $category
+            'post_category' => $category,
+            'comment_status' => $comment_status,
+            'post_attribute' => json_encode($post_attribute),
           );
 
           // jika ada id maka akan update
@@ -63,10 +83,9 @@ class Artikel extends Backend_Controller
 
         // Mengambil ID dari post
         if (!empty($post['id'])) {
-          echo json_encode(array(
-            'status' => 'success',
-            'data' => $this->Artikel_model->get($post['id'])
-          ));
+          $record = $this->Artikel_model->get($post['id']);
+          $record->post_attribute = json_decode($record->post_attribute);
+          echo json_encode(array('status' => 'success', 'data' => $record));
         } else {
 
           $total_rows = $this->Artikel_model->count();

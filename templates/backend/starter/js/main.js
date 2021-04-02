@@ -74,6 +74,38 @@ $(function () {
 					printTree(tree)
 				);
 
+				// Memanggil hari ini, untuk input waktu
+				var today = moment();
+				$("#myModal .modal-body #date").val(today.format("D"));
+				$(
+					'#myModal .modal-body #month option[value ="' +
+						today.format("M") +
+						'"]'
+				).prop("selected", true);
+				$("#myModal .modal-body #year").val(today.format("YYYY"));
+				$("#myModal .modal-body #hour").val(today.format("HH"));
+				$("#myModal .modal-body #minute").val(today.format("mm"));
+
+				// Mengambil get data di tbl user
+				var penulis = getJSON(
+					"http://" +
+						host +
+						path.replace("admin/artikel", "admin/user") +
+						"/action/ambil/ID,username",
+					{}
+				);
+				$("#post_author option").remove();
+
+				for (var i in penulis.record) {
+					$("#post_author").append(
+						'<option value="' +
+							penulis.record[i]["ID"] +
+							'">' +
+							penulis.record[i]["username"] +
+							"</option>"
+					);
+				}
+
 				// Mengatur inner html di modal tambah artikel
 				$("#myModal .modal-header #myModalLabel").text("Tambah Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Posting!");
@@ -141,6 +173,7 @@ $(function () {
 				// $("#myModal .modal-body #post_content").val(
 				// 	artikel_detail.data["post_content"]
 				// );
+
 				// untuk memanggil kategori
 				var kategori_artikel = getJSON(
 					"http://" + host + path + "/kategori/ambil",
@@ -185,6 +218,59 @@ $(function () {
 							"]"
 					).prop("checked", true);
 				}
+
+				// memanggil waktu posting artikel
+				var postdate = moment(artikel_detail.data["post_date"]);
+				$("#myModal .modal-body #date").val(postdate.format("D"));
+				$(
+					'#myModal .modal-body #month option[value ="' +
+						postdate.format("M") +
+						'"]'
+				).prop("selected", true);
+				$("#myModal .modal-body #year").val(postdate.format("YYYY"));
+				$("#myModal .modal-body #hour").val(postdate.format("HH"));
+				$("#myModal .modal-body #minute").val(postdate.format("mm"));
+
+				// Mengatur komentar di artikel
+				if (artikel_detail.data["comment_status"] != "") {
+					$("#comment_status").prop("checked", true);
+				}
+
+				// notif dan seo
+				if (artikel_detail.data["post_attribute"]) {
+					$.each(artikel_detail.data["post_attribute"], function (key, value) {
+						if (value != "")
+							$("#" + key)
+								.attr("value", value)
+								.prop("checked", true);
+					});
+				}
+
+				// Memanggil penulis artikel
+				var penulis = getJSON(
+					"http://" +
+						host +
+						path.replace("admin/artikel", "admin/user") +
+						"/action/ambil/ID,username",
+					{}
+				);
+				$("#post_author option").remove();
+
+				for (var i in penulis.record) {
+					$("#post_author").append(
+						'<option value="' +
+							penulis.record[i]["ID"] +
+							'">' +
+							penulis.record[i]["username"] +
+							"</option>"
+					);
+				}
+
+				$(
+					'#post_author option[value ="' +
+						artikel_detail.data["post_author"] +
+						'"]'
+				).prop("selected", true);
 
 				$("#myModal .modal-header #myModalLabel").text("Edit Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Update!");

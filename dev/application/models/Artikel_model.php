@@ -12,10 +12,6 @@ class Artikel_model extends MY_Model
       'field' => 'post_title',
       'label' => 'Judul Artikel',
       'rules' => 'trim|required'
-    ), 'post_content' => array(
-      'field' => 'post_content',
-      'label' => 'Isi Artikel',
-      'rules' => 'trim|required'
     )
 
   );

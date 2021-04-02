@@ -63,7 +63,7 @@ Sementara masih dalam proses development.
 - [x] Membuat Hapus Artikel (CRUD) menggunakan AJAX.
 - [x] Kelola Kategori Artikel -> Membuat Layout.
 - [x] Kelola Kategori Artikel -> Membuat model untuk kategori, dan CRUD.
-- [ ] Penambahan Atribut Artikel -> SEO, Kategori, Waktu, Setting Komentar, Featured Image dll.
+- [x] Penambahan Atribut Artikel -> SEO, Kategori, Waktu, Setting Komentar.
 - [ ] Menggunakan text editor di artikel menggunakan CKEditor.
 - [ ] Membuat search artikel menggunakan AJAX.
 
