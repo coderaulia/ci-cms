@@ -339,7 +339,42 @@ $(function () {
 					.siblings()
 					.removeClass("active");
 			}
-		} else if (hash == "mass") {
+		} else if (hash.search("mass") == 0) {
+			if (path.search("admin/artikel")) {
+				var action = getUrlVars()["action"];
+				var numberOfChecked = $("#tbl-artikel input:checkbox:checked").length;
+				if (numberOfChecked > 0) {
+					if (action == "hapus") {
+						var note = "menghapus";
+					} else if (action == "publish") {
+						var note = "mempublish";
+					} else if (action == "pending") {
+						var note = "mempending";
+					}
+
+					$("#myModal #form-artikel").attr("action", "mass");
+					$("#myModal #form-artikel #mass_action_type").val(action);
+					$("#myModal .modal-header #myModalLabel").text("Aksi Artikel masal");
+					$("#myModal .modal-footer #submit-artikel")
+						.text("Ya Langsung Saja!")
+						.show();
+					$("#myModal .modal-body").prepend(
+						'<p id="hapus-notif">Apakah Anda yakin akan ' +
+							note +
+							' : <b>"artikel-artikel terpilih"</b> ???</p>'
+					);
+				} else {
+					$("#myModal .modal-header #myModalLabel").text("Peringatan!!");
+					$("#myModal .modal-footer #submit-artikel").hide();
+					$("#myModal #form-artikel").attr("action", "bulk");
+					$("#myModal .modal-body").prepend(
+						'<p id="hapus-notif">Mohon maaf, aksi artikel tidak bisa dilakukan karena tidak ada satupun artikel yang di ceklis. Silahkan ceklis satu atau beberapa ...</p>'
+					);
+				}
+				$("#myModal form").hide();
+			}
+
+			$("#myModal").modal("show");
 		}
 	});
 
@@ -364,6 +399,16 @@ $(function () {
 		$("#myModal form").show();
 	});
 
+	//check all btn
+	$("#btn-check-all").toggle(
+		function () {
+			$("table input:checkbox").attr("checked", "checked");
+		},
+		function () {
+			$("table input:checkbox").removeAttr("checked");
+		}
+	);
+
 	// pop-up modal
 	$("#myModal").on("hidden", function () {
 		window.history.pushState(null, null, path);
@@ -382,8 +427,19 @@ $(function () {
 		eve.preventDefault();
 
 		var action = $("#form-artikel").attr("action");
-		var dataSend =
-			$("#form-artikel").serialize() + "&post_content=" + editor.getData();
+		// memilih tipe mass action
+		var mass_action_type = $("#form-artikel #mass_action_type").val();
+
+		// jika ada hash mass, maka akan pakai mass action
+		if (action == "mass") {
+			var datSend =
+				$("#tbl-artikel input").serialize() +
+				"&mass_action_type=" +
+				mass_action_type;
+		} else {
+			var dataSend =
+				$("#form-artikel").serialize() + "&post_content=" + editor.getData();
+		}
 
 		$.ajax("http://" + host + path + "/action/" + action, {
 			dataType: "json",

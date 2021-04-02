@@ -64,8 +64,9 @@ Sementara masih dalam proses development.
 - [x] Kelola Kategori Artikel -> Membuat Layout.
 - [x] Kelola Kategori Artikel -> Membuat model untuk kategori, dan CRUD.
 - [x] Penambahan Atribut Artikel -> SEO, Kategori, Waktu, Setting Komentar.
-- [ ] Menggunakan text editor di artikel menggunakan CKEditor.
+- [x] Menggunakan text editor di artikel menggunakan CKEditor.
 - [ ] Membuat search artikel menggunakan AJAX.
+- [ ] Menambahkan aksi masal di kelola artikel.
 
 ### 7. Kelola laman
 
