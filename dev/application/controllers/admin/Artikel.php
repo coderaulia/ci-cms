@@ -25,12 +25,17 @@ class Artikel extends Backend_Controller
 
         if ($this->form_validation->run() == TRUE) {
           $post = $this->input->post();
+          $category = 'tanpa-kategori';
+          if (!empty($post['category_slug'])) $category = implode(",", $post['category_slug']);
+
           $data = array(
             'post_author' => get_user_info('ID'),
             'post_title' => $post['post_title'],
             'post_name' => url_title($post['post_title'], '-', TRUE),
             'post_content' => $post['post_content'],
-            'post_date' => date('Y-m-d H:i:s')
+            'post_date' => date('Y-m-d H:i:s'),
+            'post_type' => 'artikel',
+            'post_category' => $category
           );
 
           // jika ada id maka akan update

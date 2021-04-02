@@ -38,6 +38,42 @@ $(function () {
 				removeeditor();
 				//memanggil ckeditor
 				createeditor();
+				//memanggil kategori
+				var kategori_artikel = getJSON(
+					"http://" + host + path + "/kategori/ambil",
+					{}
+				);
+				var htmlStr = "";
+				var printTree = function (node) {
+					htmlStr =
+						htmlStr + '<ul class="list-group check-list-group-kategori">';
+
+					for (var i = 0; i < node.length; i++) {
+						htmlStr =
+							htmlStr +
+							'<li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="' +
+							node[i]["category_slug"] +
+							'"> ' +
+							node[i]["category_name"] +
+							"</label></li>";
+
+						if (node[i]["children"]) {
+							printTree(node[i]["children"]);
+						}
+
+						htmlStr = htmlStr + "</li>";
+					}
+
+					htmlStr = htmlStr + "</ul>";
+					return htmlStr;
+				};
+
+				// mensortir array menjadi parent children hierarki
+				tree = unflatten(kategori_artikel.record);
+				$(".tab-pane#kategori fieldset div.control-group").html(
+					printTree(tree)
+				);
+
 				// Mengatur inner html di modal tambah artikel
 				$("#myModal .modal-header #myModalLabel").text("Tambah Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Posting!");
@@ -105,6 +141,51 @@ $(function () {
 				// $("#myModal .modal-body #post_content").val(
 				// 	artikel_detail.data["post_content"]
 				// );
+				// untuk memanggil kategori
+				var kategori_artikel = getJSON(
+					"http://" + host + path + "/kategori/ambil",
+					{}
+				);
+				var post_category = artikel_detail.data["post_category"].split(",");
+				var tree = unflatten(kategori_artikel.record);
+				var htmlStr = "";
+				var printTree = function (node) {
+					htmlStr =
+						htmlStr + '<ul class="list-group check-list-group-kategori">';
+
+					for (var i = 0; i < node.length; i++) {
+						htmlStr =
+							htmlStr +
+							'<li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="' +
+							node[i]["category_slug"] +
+							'"> ' +
+							node[i]["category_name"] +
+							"</label></li>";
+
+						if (node[i]["children"]) {
+							printTree(node[i]["children"]);
+						}
+
+						htmlStr = htmlStr + "</li>";
+					}
+
+					htmlStr = htmlStr + "</ul>";
+					return htmlStr;
+				};
+
+				$(".tab-pane#kategori fieldset div.control-group").html(
+					printTree(tree)
+				);
+
+				for (var i in post_category) {
+					// alert(post_category[i]);
+					$(
+						"ul.check-list-group-kategori li.list-group-item input[type=checkbox][value=" +
+							post_category[i] +
+							"]"
+					).prop("checked", true);
+				}
+
 				$("#myModal .modal-header #myModalLabel").text("Edit Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Update!");
 				$("#myModal #form-artikel").attr("action", "update");
@@ -177,6 +258,25 @@ $(function () {
 	});
 
 	$(window).trigger("hashchange");
+
+	// kondisi jika myModal sedang tidak dibuka, maka akan mereset form
+	$("#myModal").on("hidden", function () {
+		window.history.pushState(null, null, path);
+		$("#myModal").removeClass("big-modal");
+		$("#myModal #hapus-notif").remove();
+		$("#myModal form")
+			.find(
+				"input[type=text], input[type=hidden], input[type=password], input[type=email], textarea"
+			)
+			.val("")
+			.attr("placeholder", "");
+		$("#myModal form")
+			.find("input[type=checkbox],input[type=radio]")
+			.removeAttr("checked");
+		$("#myModal form").find("select").prop("selected", false);
+		$("#myModal form p.warning").remove();
+		$("#myModal form").show();
+	});
 
 	// pop-up modal
 	$("#myModal").on("hidden", function () {

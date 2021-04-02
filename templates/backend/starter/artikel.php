@@ -79,6 +79,57 @@
       <div class="form-group">
         <input class="input-block-level" type="text" id="post_title" name="post_title" placeholder="Tuliskan Judul Artikel Disini">
         <!-- <textarea class="form-control input-block-level" placeholer="Message" name="post_content" rows="20" id="post_content"></textarea> -->
+        <div class="tabbable onmodal">
+          <ul class="nav nav-tabs">
+            <li><a href="#kategori" data-toggle="tab"><i class="icon-folder-close"></i> Kategori</a></li>
+            <li><a href="#waktu" data-toggle="tab"><i class="icon-time"></i> Waktu</a></li>
+            <li><a href="#komentar" data-toggle="tab"><i class="icon-comment"></i> Komentar</a></li>
+
+            <li><a href="#penulis" data-toggle="tab"><i class="icon-user"></i> Penulis</a></li>
+            <li><a href="#seo" data-toggle="tab"><i class="icon-search"></i> SEO</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane" id="kategori">
+              <fieldset>
+                <div class="control-group">
+                  <ul class="list-group check-list-group-kategori">
+                    <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="bisnis"> Bisnis</label></li>
+                    <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="featured"> Featured</label></li>
+                    <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="desain"> Desain</label></li>
+                    <ul class="list-group check-list-group-kategori">
+                      <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="coloring"> Coloring</label></li>
+                      <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="typography"> Typography</label></li>
+                      <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="nirmana"> Nirmana</label></li>
+                    </ul>
+                    <li class="list-group-item"><label class="checkbox inline"><input type="checkbox" name="category_slug[]" value="komputer"> Komputer</label></li>
+                  </ul>
+                </div>
+              </fieldset>
+            </div>
+
+
+            <div class="tab-pane" id="waktu">
+              <br /><br />
+              <br />
+            </div>
+
+            <div class="tab-pane" id="komentar">
+              <br /><br />
+              <br />
+            </div>
+
+            <div class="tab-pane" id="penulis">
+              <br /><br />
+              <br />
+            </div>
+
+            <div class="tab-pane" id="seo">
+              <br /><br />
+              <br />
+            </div>
+          </div>
+        </div>
         <div id="wrap_editor"></div>
       </div>
       <input type="hidden" name="mass_action_type" id="mass_action_type" />
