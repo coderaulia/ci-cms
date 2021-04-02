@@ -361,7 +361,7 @@ $(function () {
 					$("#myModal .modal-body").prepend(
 						'<p id="hapus-notif">Apakah Anda yakin akan ' +
 							note +
-							' : <b>"artikel-artikel terpilih"</b> ???</p>'
+							" <b>artikel-artikel terpilih</b>?</p>"
 					);
 				} else {
 					$("#myModal .modal-header #myModalLabel").text("Peringatan!!");
@@ -432,7 +432,7 @@ $(function () {
 
 		// jika ada hash mass, maka akan pakai mass action
 		if (action == "mass") {
-			var datSend =
+			var dataSend =
 				$("#tbl-artikel input").serialize() +
 				"&mass_action_type=" +
 				mass_action_type;
@@ -515,6 +515,10 @@ function ambil_artikel(hal_aktif, scrolltop) {
 				$("table#tbl-artikel tbody tr").remove();
 				//perulangan mengambil data record artikel
 				$.each(data.record, function (index, element) {
+					var post_status = "";
+					if (element.post_status == "pending") {
+						post_status = "(pending)";
+					}
 					$("table#tbl-artikel")
 						.find("tbody")
 						.append(
@@ -526,7 +530,9 @@ function ambil_artikel(hal_aktif, scrolltop) {
 								element.post_ID +
 								'">' +
 								element.post_title +
-								"</a> <strong></strong></td>" +
+								"</a><strong>" +
+								post_status +
+								"</strong> <strong></strong></td>" +
 								'  <td width="10%"><i class="icon-comment-alt"></i> <span class="value">' +
 								element.comment_count +
 								"</span></td>" +

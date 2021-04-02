@@ -116,6 +116,25 @@ class Artikel extends Backend_Controller
           );
         }
         echo json_encode($result);
+      } else if ($param == 'mass') {
+        $post = $this->input->post(NULL, TRUE);
+        if (@$post['mass_action_type'] == 'hapus') {
+          if (count($post['post_id']) > 0) {
+            // melakukan perulangan ID Post
+            foreach ($post['post_id'] as $id)
+              $this->Artikel_model->delete($id);
+            $result = array('status' => 'success');
+            echo json_encode($result);
+          }
+        } else if (@$post['mass_action_type'] == 'pending' || @$post['mass_action_type'] == 'publish') {
+          if (count(@$post['post_id']) > 0) {
+            // melakukan perulangan ID Post
+            foreach ($post['post_id'] as $id)
+              $this->Artikel_model->update(array('post_status' => $post['mass_action_type']), array('post_ID' => $id));
+            $result = array('status' => 'success');
+            echo json_encode($result);
+          }
+        }
       }
     }
   }
