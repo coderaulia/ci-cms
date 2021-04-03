@@ -110,6 +110,30 @@ $(function () {
 				$("#myModal .modal-header #myModalLabel").text("Tambah Artikel");
 				$("#myModal .modal-footer #submit-artikel").text("Posting!");
 				$("#myModal #form-artikel").attr("action", "tambah");
+			} else if (path.search("admin/halaman") > 0) {
+				var halaman = getJSON("http://" + host + path + "/action/ambil", {});
+				$("#post_parent option").remove();
+				$("#post_parent").append(
+					'<option value="">Pilih Induk Halaman</option>'
+				);
+				if (halaman.record) {
+					$.each(halaman.record, function (key, value) {
+						$("#post_parent").append(
+							'<option value="' +
+								value["post_ID"] +
+								'">' +
+								value["post_title"] +
+								"</option>"
+						);
+					});
+				}
+
+				removeeditor();
+				createeditor();
+
+				$("#myModal .modal-header #myModalLabel").text("Tambah Halaman");
+				$("#myModal .modal-footer #submit-halaman").text("Tambah!");
+				$("#myModal #form-halaman").attr("action", "tambah");
 			}
 			// memunculkan pop-up
 			$("#myModal").addClass("big-modal");
@@ -277,6 +301,61 @@ $(function () {
 				$("#myModal #form-artikel").attr("action", "update");
 				//hidden post id input
 				$("#myModal #form-artikel #post_id").val(post_ID);
+			} else if (path.search("admin/halaman") > 0) {
+				var post_ID = getUrlVars()["id"];
+				var halaman_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: post_ID }
+				);
+
+				// alert();
+
+				var halaman = getJSON("http://" + host + path + "/action/ambil", {});
+				$("#post_parent option").remove();
+				$("#post_parent").append(
+					'<option value="">Pilih Induk Halaman</option>'
+				);
+				if (halaman.record) {
+					$.each(halaman.record, function (key, value) {
+						// if(value['post_ID' == halaman_detail.data['post_ID']]){}
+						$("#post_parent").append(
+							'<option value="' +
+								value["post_ID"] +
+								'">' +
+								value["post_title"] +
+								"</option>"
+						);
+					});
+				}
+
+				$(
+					'#myModal .modal-body #post_parent option[value ="' +
+						halaman_detail.data["post_parent"] +
+						'"]'
+				).prop("selected", true);
+
+				removeeditor();
+				createeditor(halaman_detail.data["post_content"]);
+				$("#myModal .modal-body #post_title").val(
+					halaman_detail.data["post_title"]
+				);
+
+				/* atribut komentar + atribut seo */
+				if (halaman_detail.data["comment_status"] != "") {
+					$("#comment_status").prop("checked", true);
+				}
+
+				$.each(halaman_detail.data["post_attribute"], function (key, value) {
+					if (value != "")
+						$("#" + key)
+							.attr("value", value)
+							.prop("checked", true);
+				});
+
+				$("#myModal .modal-header #myModalLabel").text("Edit Halaman");
+				$("#myModal .modal-footer #submit-halaman").text("Update!");
+				$("#myModal #form-halaman").attr("action", "update");
+				$("#myModal #form-halaman #post_id").val(post_ID);
 			}
 			// memunculkan pop-up
 			$("#myModal").addClass("big-modal");
@@ -318,6 +397,23 @@ $(function () {
 						" ?</b></p>"
 				);
 				$("#myModal #form-artikel #post_id").val(post_ID);
+			} else if (path.search("admin/halaman") > 0) {
+				var post_ID = getUrlVars()["id"];
+				var halaman_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: post_ID }
+				);
+
+				$("#myModal form").hide();
+				$("#myModal .modal-header #myModalLabel").text("Hapus Halaman");
+				$("#myModal .modal-footer #submit-halaman").text("Ya Hapus Saja!");
+				$("#myModal #form-halaman").attr("action", "hapus");
+				$("#myModal .modal-body").prepend(
+					'<p id="hapus-notif">Apakah Anda yakin akan menghapus : <b>"' +
+						halaman_detail.data["post_title"] +
+						'"</b> ???</p>'
+				);
+				$("#myModal #form-halaman #post_id").val(post_ID);
 			}
 
 			$("#myModal").modal("show");
@@ -500,6 +596,47 @@ $(function () {
 		opacity: 0.5,
 		cursor: "move",
 		placeholder: "ui-state-highlight",
+	});
+
+	$(document).on("click", "#submit-halaman", function (eve) {
+		eve.preventDefault();
+		var action = $("#form-halaman").attr("action");
+
+		if (action == "hapus") {
+			var datatosend = $("#form-halaman").serialize();
+		} else {
+			var datatosend =
+				$("#form-halaman").serialize() + "&post_content=" + editor.getData();
+		}
+
+		$.ajax("http://" + host + path + "/action/" + action, {
+			dataType: "json",
+			type: "POST",
+			data: datatosend,
+			success: function (data) {
+				if (data.status == "success") {
+					ambil_halaman();
+					$("#form-halaman").find("input[type=text], textarea").val("");
+					$("#myModal").modal("hide");
+					$("div.widget-content").prepend(
+						'<div class="control-group"><div class="alert alert-info">' +
+							'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+							"<strong>Berhasil!</strong> Halaman Telah Diperbaharui ...</div></div>"
+					);
+				} else {
+					$.each(data.errors, function (key, value) {
+						$("#" + key).attr("placeholder", value);
+					});
+				}
+			},
+		});
+	});
+
+	ambil_halaman();
+
+	// prevent using enter to submit
+	$(document).on("submit", "#myModal form", function (eve) {
+		eve.preventDefault();
 	});
 });
 
@@ -713,6 +850,109 @@ function unflatten(array, parent, tree) {
 		}
 		_.each(children, function (child) {
 			unflatten(array, child);
+		});
+	}
+
+	return tree;
+}
+
+function ambil_halaman() {
+	// jsfiddle.net/LkkwH/1/
+	// http://jsfiddle.net/sw_lasse/9wpHa/
+	var path = window.location.pathname;
+	var host = window.location.hostname;
+	if ($("#list-halaman").length > 0) {
+		$.ajax("http://" + host + path + "/action/ambil", {
+			dataType: "json",
+			type: "POST",
+			success: function (data) {
+				var htmlStr = "";
+				var printTree = function (node) {
+					htmlStr = htmlStr + '<ul class="list-group hirarki halaman">';
+
+					for (var i = 0; i < node.length; i++) {
+						if (node[i]["children"]) var listyle = "li-parent";
+						else listyle = "";
+
+						htmlStr =
+							htmlStr +
+							'<li id="ID_' +
+							node[i]["post_ID"] +
+							'" class="list-group-item ' +
+							listyle +
+							'">';
+						htmlStr =
+							htmlStr +
+							'<a class="link-edit" href="halaman#edit?id=' +
+							node[i]["post_ID"] +
+							'">' +
+							node[i]["post_title"] +
+							"</a>";
+						htmlStr = htmlStr + '<div class="pull-right">';
+						htmlStr =
+							htmlStr +
+							'<a href="halaman#edit?id=' +
+							node[i]["post_ID"] +
+							'" class="link-edit btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i> Edit</a> ';
+						htmlStr =
+							htmlStr +
+							'<a href="halaman#hapus?id=' +
+							node[i]["post_ID"] +
+							'" id="hapus_" class="btn btn-invert btn-small"><i class="btn-icon-only icon-remove"></i> Hapus</a>';
+						htmlStr = htmlStr + "</div>";
+
+						if (node[i]["children"]) {
+							printTree(node[i]["children"]);
+						}
+
+						htmlStr = htmlStr + "</li>";
+					}
+
+					htmlStr = htmlStr + "</ul>";
+					return htmlStr;
+				};
+
+				tree = unflattenHalaman(data.record);
+				$("#list-halaman").html(printTree(tree));
+
+				$("#list-halaman .list-group").sortable({
+					opacity: 0.5,
+					cursor: "move",
+					placeholder: "ui-state-highlight",
+					update: function () {
+						var orderAll = [];
+						$(".list-group li").each(function () {
+							orderAll.push($(this).attr("id").replace(/_/g, "[]="));
+						});
+
+						// alert($(this).sortable('serialize'));
+						$.post(
+							"http://" + host + path + "/action/sortir",
+							orderAll.join("&")
+						);
+					},
+				});
+			},
+		});
+	}
+}
+
+function unflattenHalaman(array, parent, tree) {
+	tree = typeof tree !== "undefined" ? tree : [];
+	parent = typeof parent !== "undefined" ? parent : { post_ID: 0 };
+
+	var children = _.filter(array, function (child) {
+		return child.post_parent == parent.post_ID;
+	});
+
+	if (!_.isEmpty(children)) {
+		if (parent.post_ID == 0) {
+			tree = children;
+		} else {
+			parent["children"] = children;
+		}
+		_.each(children, function (child) {
+			unflattenHalaman(array, child);
 		});
 	}
 
