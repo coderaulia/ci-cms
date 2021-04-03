@@ -71,7 +71,7 @@ Sementara masih dalam proses development.
 
 ### 7. Kelola laman
 
-- [ ] Membuat fitur kelola laman di Admin Panel.
+- [x] Membuat fitur kelola laman di Admin Panel.
 
 ### 8. Kelola Komentar
 
@@ -79,8 +79,8 @@ Sementara masih dalam proses development.
 
 ### 9. Membuat Frontend tampilan Blog.
 
-- [ ] Mendesign Tampilan dasar.
-- [ ] Melakukan integrasi template.
+- [x] Mendesign Tampilan dasar.
+- [x] Melakukan integrasi template.
 - [ ] Membuat detail artikel.
 - [ ] Membuat integrasi dengan komentar
 

@@ -21,4 +21,13 @@ class Artikel_model extends MY_Model
   {
     parent::__construct();
   }
+
+  // menampilkan artikel
+  function get_artikel($where = NULL, $limit = NULL, $offset = NULL, $single = FALSE, $select = NULL)
+  {
+    // $this->db->join('table_name', 'table_name.field = table_name.field')
+    $this->db->join('{PRE}user', '{PRE}' . $this->_table_name . '.post_author = {PRE}user.ID', 'LEFT');
+    $this->db->where('post_type', $this->_type);
+    return parent::get_by($where, $limit, $offset, $single, $select);
+  }
 }

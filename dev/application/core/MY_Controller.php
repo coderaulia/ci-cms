@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller
   {
     parent::__construct();
 
-    $this->load->helper(array('template_helper', 'user_helper'));
+    $this->load->helper(array('template_helper', 'user_helper', 'date'));
     $this->load->library(array('Site', 'session'));
     $this->load->model(array('User_model'));
   }
