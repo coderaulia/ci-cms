@@ -13,7 +13,7 @@
             </a>
             <p class="post-meta">Posted by
               <?= post_meta('author', $post); ?> on <?= post_meta('time', $post); ?>
-              | Category: <?= post_category($post); ?>
+              | Category : <?= post_category($post); ?>
             </p>
           </div>
 
@@ -21,6 +21,7 @@
         <?php endforeach; ?>
       <?php endif; ?>
       <hr>
+      <!-- Pager -->
       <?= post_pagination($type); ?>
     </div>
   </div>

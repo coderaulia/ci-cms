@@ -28,7 +28,7 @@
       <div class="container">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <div class="navbar-header">
-            <a href="index.html" class="navbar-brand">Auliasatriow.com</a>
+            <a href="<?php echo base_url(); ?>" class="navbar-brand">Auliasatriow.com</a>
           </div>
         </div>
 

@@ -19,7 +19,7 @@ class Artikel extends Frontend_Controller
   public function kategori()
   {
     $data = array();
-    $this->site->view('kategori', $data);
+    $this->site->view('kategori_artikel', $data);
   }
 
   // laman detail
