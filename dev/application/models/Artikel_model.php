@@ -7,6 +7,7 @@ class Artikel_model extends MY_Model
   protected $_primary_key = 'post_ID';
   protected $_order_by = 'post_ID';
   protected $_order_by_type = 'DESC';
+  protected $_type = 'artikel';
   public $rules = array(
     'post_title' => array(
       'field' => 'post_title',

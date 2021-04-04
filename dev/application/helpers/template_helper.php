@@ -1,5 +1,8 @@
 <?php
 
+global $post;
+global $post_detail;
+
 function get_template_directory($path, $dir_file)
 {
   global $SConfig;
