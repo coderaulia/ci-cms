@@ -89,3 +89,13 @@ Sementara masih dalam proses development.
 - [ ] Membuat Fitur Template di Admin Panel.
 
 ### 11. Fitur Statistik Pengunjung Website
+
+- [ ] Membuat statistik pengunjung di Admin Panel.
+
+### 12. Website Setting
+
+- [ ] Membuat fitur pengaturan untuk website.
+
+### 13. Fitur kelola User/Admin
+
+- [ ] Membuat kelola user di Admin Panel.
