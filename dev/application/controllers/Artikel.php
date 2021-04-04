@@ -23,7 +23,7 @@ class Artikel extends Frontend_Controller
   }
 
   // laman detail
-  public function detil()
+  public function detail()
   {
     $data = array();
     $this->site->view('artikel', $data);

@@ -81,8 +81,8 @@ Sementara masih dalam proses development.
 
 - [x] Mendesign Tampilan dasar.
 - [x] Melakukan integrasi template.
-- [ ] Membuat detail artikel.
-- [ ] Membuat integrasi dengan komentar
+- [x] Membuat detail artikel.
+- [x] Membuat integrasi dengan komentar
 
 ### 10. Fitur Template & Pemilihannya di Admin Panel.
 

@@ -62,7 +62,7 @@ $route['artikel/(:any)'] = "artikel/kategori/$1";
 
 $route['artikel/(:any)/hal'] = "artikel/kategori/$1/hal";
 $route['artikel/(:any)/hal/(:num)'] = "artikel/kategori/$1/hal/$2";
-$route['artikel/(:any)/(:any)'] = "artikel/detil/$1/$2";
+$route['artikel/(:any)/(:any)'] = "artikel/detail/$1/$2";
 
 // Komentar
 $route['komentar/kirim'] = "front/komentar/kirim";
