@@ -8,7 +8,7 @@ class Backend_Controller extends MY_Controller
   {
     parent::__construct();
 
-    $this->load->helper(array('security'));
+    $this->load->helper(array('security', 'form', 'admin_helper'));
     $this->load->library(array('form_validation'));
     $this->load->model(array());
 
