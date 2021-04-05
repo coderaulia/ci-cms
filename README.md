@@ -89,6 +89,10 @@ Sementara masih dalam proses development.
 - [x] Membuat admin helper untuk mengetahui apa saja isi folder template front-end.
 - [x] Memanggil admin helper di Backend Controller.
 - [x] Membuat models untuk Konfigurasi website, dan memanggilnya di Front-end Controller, untuk membuat template menjadi dinamis (sesuai dengan database).
+- [x] Membuat info_template.php di default template.
+- [x] Membuat Tampilan_model untuk mengubah data template.
+- [x] Membuat controller untuk mengatur tampilan.
+- [x] Menambahkan Function di template_helper.
 - [ ] Membuat Fitur Template di Admin Panel.
 
 ### 11. Fitur Statistik Pengunjung Website

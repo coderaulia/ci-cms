@@ -281,3 +281,25 @@ function comment_list()
 
   return $display;
 }
+
+function e_($param_name)
+{
+  $_this = &get_instance();
+  $display = NULL;
+  $template_setting = $_this->site->template_setting;
+
+  if ($param_name) {
+    $display = $template_setting[$param_name]['value'];
+  }
+
+  return $display;
+}
+
+function comment_feature()
+{
+  return TRUE;
+}
+
+function head()
+{
+}
