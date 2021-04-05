@@ -86,6 +86,7 @@ Sementara masih dalam proses development.
 
 ### 10. Fitur Template & Pemilihannya di Admin Panel.
 
+- [ ] Membuat admin helper untuk mengetahui apa saja isi folder template front-end.
 - [ ] Membuat Fitur Template di Admin Panel.
 
 ### 11. Fitur Statistik Pengunjung Website
