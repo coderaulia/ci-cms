@@ -93,7 +93,7 @@ Sementara masih dalam proses development.
 - [x] Membuat Tampilan_model untuk mengubah data template.
 - [x] Membuat controller untuk mengatur tampilan.
 - [x] Menambahkan Function di template_helper.
-- [ ] Membuat Fitur Template di Admin Panel.
+- [x] Membuat Fitur Template di Admin Panel.
 
 ### 11. Fitur Statistik Pengunjung Website
 

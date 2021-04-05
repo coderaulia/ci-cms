@@ -575,6 +575,106 @@ $(function () {
 
 			$("#myModal").modal("show");
 		}
+
+		if (path.search("admin/tampilan") > 0) {
+			$("#myModal").addClass("big-modal");
+
+			// pengaturan template
+			if (hash.search("setting") == 0) {
+				var template_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ option_name: "template_setting" }
+				);
+
+				$(
+					"#myModal .modal-body #form-tampilan fieldset.form-horizontal div.control-group"
+				).empty();
+
+				$.each(
+					template_detail.template_setting["template_attribute"],
+					function (index, element) {
+						if (
+							template_detail.template_setting["template_attribute"][index]
+								.type == "text"
+						) {
+							$(
+								"#myModal .modal-body #form-tampilan fieldset.form-horizontal div.control-group"
+							).append(
+								'<label class="control-label">' +
+									humanize(index) +
+									"</label>" +
+									'<div class="controls">' +
+									'<input type="text" name="' +
+									index +
+									'" id="' +
+									index +
+									'" class="form-control input-block-level" value="' +
+									template_detail.template_setting["template_attribute"][index]
+										.value +
+									'" /> ' +
+									"</div>"
+							);
+						}
+					}
+				);
+
+				$(
+					"#myModal .modal-body #form-tampilan fieldset.form-horizontal"
+				).show();
+				$("#myModal .modal-body div.template_detail").remove();
+				$("#myModal .modal-body #form-tampilan").attr("action", "update");
+				$("#myModal .modal-header #myModalLabel").text("Setting Tampilan");
+				$("#myModal .modal-footer #submit-tampilan").text("Simpan!");
+				$("#myModal").modal("show");
+
+				// mengaktifkan template
+			} else if (hash.search("aktifkan") == 0) {
+				var template = getUrlVars()["template"];
+				var template_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ template: template }
+				);
+
+				$("#myModal .modal-body div.template_detail").remove();
+				$("#myModal .modal-body").append(
+					'<div class="template_detail">' +
+						'<div class="span4">' +
+						'<img src="http://' +
+						host +
+						path.replace("admin/tampilan", "templates/frontend/") +
+						template_detail["data"].template_directory +
+						'/screenshot.png" />' +
+						"</div>" +
+						'<div class="span5">' +
+						"<h2>Template " +
+						template_detail["data"].template_name +
+						" " +
+						template_detail["data"].template_version +
+						"</h2>" +
+						"<p>Dibuat oleh: <strong>" +
+						template_detail["data"].template_author +
+						"</strong></p>" +
+						template_detail["data"].template_description +
+						"</div>" +
+						"</div>"
+				);
+
+				$("#myModal .modal-body #form-tampilan").attr("action", "update");
+				$("#myModal .modal-body #form-tampilan #template_directory").val(
+					template
+				);
+				$(
+					"#myModal .modal-body #form-tampilan fieldset.form-horizontal"
+				).hide();
+				$("#myModal .modal-header #myModalLabel").text(
+					"Aktifkan Template " + humanize(template)
+				);
+				$("#myModal .modal-footer #submit-tampilan").text(
+					"Aktifkan Template Ini!"
+				);
+				$("#myModal").modal("show");
+			}
+		}
 	});
 
 	$(window).trigger("hashchange");
@@ -769,6 +869,28 @@ $(function () {
 							'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
 							"<strong>Berhasil!</strong> Komentar Telah Diperbaharui ...</div></div>"
 					);
+				}
+			},
+		});
+	});
+
+	// Tampilan
+	ambil_tampilan();
+
+	$(document).on("click", "#submit-tampilan", function (eve) {
+		var action = $("#form-tampilan").attr("action");
+
+		$.ajax("http://" + host + path + "/action/" + action, {
+			dataType: "json",
+			type: "POST",
+			data: $("#form-tampilan").serialize(),
+			success: function (data) {
+				if (data.status == "success") {
+					ambil_tampilan();
+					$("#form-tampilan")
+						.find("input[type=text], input[type=hidden]")
+						.val("");
+					$("#myModal").modal("hide");
 				}
 			},
 		});
@@ -1198,6 +1320,55 @@ function removeeditor() {
 	// Destroy the editor.
 	editor.destroy();
 	editor = null;
+}
+
+// Mengambil tampilan
+function ambil_tampilan() {
+	var path = window.location.pathname;
+	var host = window.location.hostname;
+	if ($("#list-tampilan").length > 0) {
+		$.ajax("http://" + host + path + "/action/ambil", {
+			dataType: "json",
+			type: "POST",
+			success: function (data) {
+				$("#list-tampilan div.single-tampilan").remove();
+				$(
+					"#myModal .modal-body #form-tampilan fieldset.form-horizontal div.control-group"
+				).empty();
+				$.each(data.record, function (index, element) {
+					// alert(element.template_name);
+					$("#list-tampilan").append(
+						'<div class="span3 single-tampilan">' +
+							'  <img src="http://' +
+							host +
+							path.replace("admin/tampilan", "templates/frontend/") +
+							element.template_directory +
+							'/screenshot.png" />' +
+							'  <a href="#aktifkan?template=' +
+							element.template_directory +
+							'" class="pull-right">Aktifkan!</a><h4 class="pull-left">' +
+							element.template_name +
+							" v." +
+							element.template_version +
+							"</h4>" +
+							"</div>"
+					);
+				});
+
+				/* ini untuk bagian detail template edit */
+				$("#template-now img").attr(
+					"src",
+					"http://" +
+						host +
+						path.replace("admin/tampilan", "templates/frontend/") +
+						data["template_setting"].template_directory +
+						"/screenshot.png"
+				);
+
+				$("body").scrollTop(0);
+			},
+		});
+	}
 }
 
 function ambil_komentar(hal_aktif, scrolltop, cari) {
