@@ -87,8 +87,8 @@ Sementara masih dalam proses development.
 ### 10. Fitur Template & Pemilihannya di Admin Panel.
 
 - [x] Membuat admin helper untuk mengetahui apa saja isi folder template front-end.
-- [ ] Memanggil admin helper di Backend Controller.
-- [ ] Membuat models untuk Konfigurasi website, dan memanggilnya di Front-end Controller, untuk membuat template menjadi dinamis (sesuai dengan database).
+- [x] Memanggil admin helper di Backend Controller.
+- [x] Membuat models untuk Konfigurasi website, dan memanggilnya di Front-end Controller, untuk membuat template menjadi dinamis (sesuai dengan database).
 - [ ] Membuat Fitur Template di Admin Panel.
 
 ### 11. Fitur Statistik Pengunjung Website
