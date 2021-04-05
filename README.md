@@ -75,7 +75,7 @@ Sementara masih dalam proses development.
 
 ### 8. Kelola Komentar
 
-- [ ] Membuat fitur kelola komentar di Admin Panel.
+- [x] Membuat fitur kelola komentar di Admin Panel.
 
 ### 9. Membuat Frontend tampilan Blog.
 

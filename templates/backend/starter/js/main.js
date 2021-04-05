@@ -356,6 +356,38 @@ $(function () {
 				$("#myModal .modal-footer #submit-halaman").text("Update!");
 				$("#myModal #form-halaman").attr("action", "update");
 				$("#myModal #form-halaman #post_id").val(post_ID);
+
+				// Management komentar
+			} else if (path.search("admin/komentar") > 0) {
+				var comment_ID = getUrlVars()["id"];
+				var comment_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: comment_ID }
+				);
+
+				$("#myModal .modal-body #comment_author_name").val(
+					comment_detail.data["comment_author_name"]
+				);
+				$("#myModal .modal-body #comment_author_email").val(
+					comment_detail.data["comment_author_email"]
+				);
+				$("#myModal .modal-body #comment_author_url").val(
+					comment_detail.data["comment_author_url"]
+				);
+				$("#myModal .modal-body #comment_content").val(
+					comment_detail.data["comment_content"]
+				);
+				$(
+					'#myModal .modal-body #comment_approved option[value ="' +
+						comment_detail.data["comment_approved"] +
+						'"]'
+				).prop("selected", true);
+				$("#myModal .modal-header #myModalLabel").text("Edit Komentar");
+				$("#myModal .modal-footer #submit-komentar").text("Update!");
+				$("#myModal #form-komentar").attr("action", "update");
+				$("#myModal #form-komentar #comment_ID").val(
+					comment_detail.data["comment_ID"]
+				);
 			}
 			// memunculkan pop-up
 			$("#myModal").addClass("big-modal");
@@ -414,11 +446,28 @@ $(function () {
 						'"</b> ???</p>'
 				);
 				$("#myModal #form-halaman #post_id").val(post_ID);
+			} else if (path.search("admin/komentar") > 0) {
+				var comment_ID = getUrlVars()["id"];
+				var komentar_detail = getJSON(
+					"http://" + host + path + "/action/ambil",
+					{ id: comment_ID }
+				);
+
+				$("#myModal form").hide();
+				$("#myModal .modal-header #myModalLabel").text("Hapus Komentar");
+				$("#myModal .modal-footer #submit-komentar").text("Ya Hapus Saja!");
+				$("#myModal #form-komentar").attr("action", "hapus");
+				$("#myModal .modal-body").prepend(
+					'<p id="hapus-notif">Apakah Anda yakin akan menghapus komentar dari : <b>"' +
+						komentar_detail.data["comment_author_name"] +
+						'"</b> ???</p>'
+				);
+				$("#myModal #form-komentar #comment_ID").val(comment_ID);
 			}
 
 			$("#myModal").modal("show");
 		} else if (hash.search("ambil") == 0) {
-			if (path.search("admin/artikel")) {
+			if (path.search("admin/artikel") > 0) {
 				var hal_aktif,
 					cari,
 					kategori = null;
@@ -430,6 +479,25 @@ $(function () {
 
 				ambil_artikel(hal_aktif, true);
 				$("ul#pagination-artikel li a:contains('" + hal_aktif + "')")
+					.parents()
+					.addClass("active")
+					.siblings()
+					.removeClass("active");
+
+				// ambil komentar
+			} else if (path.search("admin/komentar") > 0) {
+				var hal_aktif,
+					cari = null;
+				var hash = getUrlVars();
+				if (hash["cari"] && hash["hal"]) {
+					hal_aktif = hash["hal"];
+					cari = hash["cari"];
+				} else if (hash["hal"]) {
+					hal_aktif = hash["hal"];
+				}
+
+				ambil_komentar(hal_aktif, true, cari);
+				$("ul#pagination-komentar li a:contains('" + hal_aktif + "')")
 					.parents()
 					.addClass("active")
 					.siblings()
@@ -465,6 +533,41 @@ $(function () {
 					$("#myModal #form-artikel").attr("action", "bulk");
 					$("#myModal .modal-body").prepend(
 						'<p id="hapus-notif">Mohon maaf, aksi artikel tidak bisa dilakukan karena tidak ada satupun artikel yang di ceklis. Silahkan ceklis satu atau beberapa ...</p>'
+					);
+				}
+				$("#myModal form").hide();
+			}
+
+			// mass action komentar
+			else if (path.search("admin/komentar") > 0) {
+				var action = getUrlVars()["action"];
+				var numberOfChecked = $("#tbl-komentar input:checkbox:checked").length;
+				if (numberOfChecked > 0) {
+					if (action == "hapus") {
+						var note = "menghapus";
+					} else if (action == "publish") {
+						var note = "mempublish";
+					} else if (action == "pending") {
+						var note = "mempending";
+					}
+
+					$("#myModal #form-komentar").attr("action", "mass");
+					$("#myModal #form-komentar #mass_action_type").val(action);
+					$("#myModal .modal-header #myModalLabel").text("Aksi Artikel masal");
+					$("#myModal .modal-footer #submit-komentar")
+						.text("Ya Langsung Saja!")
+						.show();
+					$("#myModal .modal-body").prepend(
+						'<p id="hapus-notif">Apakah Anda yakin akan ' +
+							note +
+							' : <b>"komentar-komentar terpilih"</b> ???</p>'
+					);
+				} else {
+					$("#myModal .modal-header #myModalLabel").text("Peringatan!!");
+					$("#myModal .modal-footer #submit-komentar").hide();
+					$("#myModal #form-komentar").attr("action", "bulk");
+					$("#myModal .modal-body").prepend(
+						'<p id="hapus-notif">Mohon maaf, aksi komentar tidak bisa dilakukan karena tidak ada satupun komentar yang di ceklis. Silahkan ceklis satu atau beberapa ...</p>'
 					);
 				}
 				$("#myModal form").hide();
@@ -633,6 +736,43 @@ $(function () {
 	});
 
 	ambil_halaman();
+
+	// komentar
+
+	ambil_komentar();
+
+	$(document).on("click", "#submit-komentar", function (eve) {
+		eve.preventDefault();
+		var action = $("#form-komentar").attr("action");
+		var mass_action_type = $("#form-komentar #mass_action_type").val();
+
+		if (action == "mass") {
+			var datatosend =
+				$("#tbl-komentar input").serialize() +
+				"&mass_action_type=" +
+				mass_action_type;
+		} else {
+			var datatosend = $("#form-komentar").serialize();
+		}
+
+		$.ajax("http://" + host + path + "/action/" + action, {
+			dataType: "json",
+			type: "POST",
+			data: datatosend,
+			success: function (data) {
+				if (data.status == "success") {
+					ambil_komentar();
+					$("#form-komentar").find("input[type=text], textarea").val("");
+					$("#myModal").modal("hide");
+					$("div.widget-content").prepend(
+						'<div class="control-group"><div class="alert alert-info">' +
+							'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+							"<strong>Berhasil!</strong> Komentar Telah Diperbaharui ...</div></div>"
+					);
+				}
+			},
+		});
+	});
 
 	// prevent using enter to submit
 	$(document).on("submit", "#myModal form", function (eve) {
@@ -856,6 +996,12 @@ function unflatten(array, parent, tree) {
 	return tree;
 }
 
+function humanize(str) {
+	str = str.replace(/-/g, " ");
+	str = str.replace(/_/g, " ");
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function ambil_halaman() {
 	// jsfiddle.net/LkkwH/1/
 	// http://jsfiddle.net/sw_lasse/9wpHa/
@@ -1052,6 +1198,126 @@ function removeeditor() {
 	// Destroy the editor.
 	editor.destroy();
 	editor = null;
+}
+
+function ambil_komentar(hal_aktif, scrolltop, cari) {
+	var path = window.location.pathname;
+	var host = window.location.hostname;
+	if ($("table#tbl-komentar").length > 0) {
+		$.ajax("http://" + host + path + "/action/ambil", {
+			dataType: "json",
+			type: "POST",
+			data: { hal_aktif: hal_aktif, cari: cari },
+			success: function (data) {
+				/***********************/
+				/* tampilkan datanya  */
+				/**********************/
+				$("table#tbl-komentar tbody tr").remove();
+				$.each(data.record, function (index, element) {
+					var status = "";
+					if (element.comment_approved == "pending")
+						status = " <strong>(pending)</strong>";
+
+					$("table#tbl-komentar")
+						.find("tbody")
+						.append(
+							"<tr>" +
+								'    <td width="2%"><input type="checkbox" name="comment_ID[]" value="' +
+								element.comment_ID +
+								'"></td>' +
+								'    <td width="20%">' +
+								"      <span><strong>" +
+								element.comment_author_name +
+								"</strong></span>" +
+								"      <span>" +
+								'         <a href="' +
+								element.comment_author_url +
+								'">' +
+								element.comment_author_url +
+								"</a><br />" +
+								'         <a href="mailto:' +
+								element.comment_author_email +
+								'">' +
+								element.comment_author_email +
+								"</a><br />" +
+								'         <a href="#">' +
+								element.comment_author_IP +
+								"</a>" +
+								"      </span>" +
+								"    </td>" +
+								'    <td width="30%">' +
+								element.comment_content +
+								status +
+								"</td>" +
+								'    <td width="20%"><i class="icon-file"></i> <span>' +
+								humanize(element.post_type) +
+								' : "<a href="' +
+								element.post_type +
+								"#edit?id=" +
+								element.post_ID +
+								'">' +
+								element.post_title +
+								'</a>"</span></td>' +
+								'    <td width="12%"><i class="icon-time"></i> <span class="value">' +
+								moment(element.comment_date).fromNow() +
+								"</span></td>" +
+								'    <td width="16%" class="td-actions">' +
+								'      <a href="komentar#edit?id=' +
+								element.comment_ID +
+								'" class="link-edit btn btn-small btn-info"><i class="btn-icon-only icon-pencil"></i> Edit</a> ' +
+								'      <a href="komentar#hapus?id=' +
+								element.comment_ID +
+								'" id="hapus_' +
+								element.comment_ID +
+								'" class="btn btn-invert btn-small"><i class="btn-icon-only icon-remove"></i> Hapus</a>' +
+								"    </td>" +
+								"</tr>"
+						);
+				});
+
+				/********************/
+				/*  buat pagination */
+				/********************/
+				var pagination = "";
+				var paging = Math.ceil(data.total_rows / data.perpage);
+
+				if (!hal_aktif && $("ul#pagination-komentar li").length == 0) {
+					$("ul#pagination-komentar li").remove();
+					for (i = 1; i <= paging; i++) {
+						pagination =
+							pagination +
+							'<li><a href="komentar#ambil?hal=' +
+							i +
+							'">' +
+							i +
+							"</a></li>";
+					}
+				} else if (hal_aktif && cari) {
+					$("ul#pagination-komentar li").remove();
+					for (i = 1; i <= paging; i++) {
+						pagination =
+							pagination +
+							'<li><a href="komentar#ambil?cari=' +
+							cari +
+							"&hal=" +
+							i +
+							'">' +
+							i +
+							"</a></li>";
+					}
+				}
+
+				$("ul#pagination-komentar").append(pagination);
+				$("ul#pagination-komentar li:contains('" + hal_aktif + "')").addClass(
+					"active"
+				);
+
+				if (scrolltop == true) {
+					$("body").scrollTop(0);
+				}
+			},
+		});
+	}
 }
 
 var lineChartData = {
