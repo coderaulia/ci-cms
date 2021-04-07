@@ -52,4 +52,48 @@ class Site
       }
     }
   }
+
+  function visitor_log()
+  {
+
+    $_this = &get_instance();
+    $_this->load->library('user_agent');
+    $_this->load->model('Statistik_model');
+
+    if ((!$_this->session->userdata('user_online'))) {
+      $sessId = session_id();
+
+      //$ip = $_SERVER['REMOTE_ADDR']; ketika sudah diupload ke hosting
+      $ip = '112.215.36.142'; // IP dummy
+      //$ip = '127.0.0.1';
+      $date = date('Y-m-d H:i:s');
+      $agent = $_this->agent->agent_string();
+      (!empty($_SERVER['HTTP_REFERER'])) ? $reff = $_SERVER['HTTP_REFERER'] : $reff = '';
+
+      // gunakan IP dari API untuk data detailnya
+      @$var = file_get_contents("http://ip-api.com/json/$ip");
+      $var = json_decode($var);
+
+      $visitorLogs = array(
+        'visitor_IP' => $var->query,
+        'visitor_IP' => $ip,
+        'visitor_referer' => $reff,
+        'visitor_date' => $date,
+        'visitor_agent' => $agent,
+        'visitor_session' => $sessId,
+        'visitor_city' => @$var->city,
+        'visitor_region' => @$var->regionName,
+        'visitor_country' => @$var->country,
+        'visitor_os' => $_this->agent->platform(),
+        'visitor_browser' => $_this->agent->browser() . ' ' . $_this->agent->version(),
+        'visitor_isp' => @$var->isp
+      );
+
+      $_this->Statistik_model->insert($visitorLogs);
+
+      $_this->session->set_userdata(array('user_online' => session_id()));
+    }
+
+    return TRUE;
+  }
 }
