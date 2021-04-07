@@ -30,5 +30,9 @@ class Frontend_Controller extends MY_Controller
       $this->site->template = 'default';
 
     $this->site->template_setting = unserialize($template_setting['template_attribute']);
+
+
+    // melakukan logging pengunjung website
+    $this->site->visitor_log();
   }
 }
